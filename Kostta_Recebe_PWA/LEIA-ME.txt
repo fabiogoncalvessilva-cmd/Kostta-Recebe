@@ -1,0 +1,38 @@
+KOSTTA RECEBE - PACOTE DO APLICATIVO (PWA)
+==========================================
+
+O que é
+  A página Kostta Recebe pronta para ser instalada no celular como aplicativo (ícone na tela inicial, abre em tela cheia).
+  Para instalar, ela precisa estar hospedada num endereço https. Um arquivo no Google Drive não funciona como atalho,
+  porque o Drive não exibe páginas HTML como um site (por isso deu erro ao adicionar à tela inicial).
+
+Arquivos desta pasta (suba TODOS, na mesma pasta, sem renomear)
+  index.html, manifest.webmanifest, sw.js, icon-192.png, icon-512.png, icon-512-maskable.png, apple-touch-icon.png
+
+Privacidade
+  Estes arquivos NÃO contêm a Grade, custos nem preços. Só o código da página e o logo.
+  A Grade continua sendo carregada em cada aparelho (botão Carregar Grade na aba Grade) e fica guardada no próprio aparelho.
+  Quem tiver o endereço consegue abrir o aplicativo vazio. Não coloque a Grade dentro destes arquivos antes de hospedar.
+
+Opção A - GitHub Pages (gratuito)
+  1. Crie uma conta em github.com e um repositório público novo (ex.: kostta-recebe).
+  2. Add file > Upload files: arraste todos os arquivos desta pasta e confirme (Commit).
+  3. Settings > Pages > Build and deployment > Deploy from a branch > main / (root) > Save.
+  4. Em alguns minutos o endereço aparece: https://SEU-USUARIO.github.io/kostta-recebe/
+
+Opção B - Netlify (gratuito, mais rápido)
+  1. Acesse app.netlify.com/drop e arraste a PASTA com os arquivos.
+  2. O site recebe um endereço https. Pode ser necessário criar uma conta gratuita para ele não expirar.
+
+Instalar no celular
+  Android (Chrome): abra o endereço > menu (três pontos) > Instalar app (ou Adicionar à tela inicial).
+  iPhone (Safari):  abra o endereço > Compartilhar > Adicionar à Tela de Início.
+  Depois, na aba Grade do aplicativo, toque em Carregar Grade e escolha o arquivo exportado do ERP.
+
+Atualizar o aplicativo
+  Substitua o index.html (e os demais arquivos, se mudarem) na hospedagem. O aplicativo pega a versão nova
+  automaticamente quando abrir com internet. Se um aparelho continuar com a versão antiga, feche e abra o aplicativo duas vezes.
+
+Observações
+  - Nada disto foi testado por mim num celular ou numa hospedagem real; confira a instalação no seu aparelho.
+  - O aplicativo abre sem sinal depois da primeira visita, mas ler a chave por foto exige internet na primeira vez (baixa o leitor).
