@@ -186,8 +186,11 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 <details class="box" open><summary>Parâmetros</summary><div id="pp"></div><div class="btns"><button class="btn" id="bd">Ver exemplo (dados fictícios)</button></div></details>
 <section class="box">
   <b class="t">Aplicativo</b>
-  <p class="hint">Instale para abrir em tela cheia, como um aplicativo. Versão 2026.10.30.</p>
-  <div class="btns"><button class="btn pri" id="binst" hidden>Instalar app</button></div>
+  <p class="hint">Instale para abrir em tela cheia, como um aplicativo.</p>
+  <div class="gm" style="margin-top:4px"><div><small>Versão instalada</small><b id="ver"></b></div><div><small>Atualizada em</small><b id="verd" style="font-size:12.5px">—</b></div></div>
+  <p class="hint">Se o aplicativo não mostrar as novidades, toque em Buscar atualização. A Grade, as embalagens e as vendas não são apagadas.</p>
+  <div class="btns"><button class="btn pri" id="bupd">Buscar atualização</button><button class="btn" id="binst" hidden>Instalar app</button></div>
+  <p id="updm" class="hint"></p>
   <p class="hint">Android (Chrome): menu ⋮ e Instalar app. iPhone (Safari): Compartilhar e Adicionar à Tela de Início. A instalação exige a página hospedada em um endereço https.</p>
 </section>
 </div>
@@ -224,7 +227,8 @@ function buildIdx(rows){idx=new Map();byCod=new Map();for(const r of rows){const
 const MOVEL=!!(/Android|iPhone|iPad|iPod|Mobile|Silk/i.test(navigator.userAgent||'')||((window.matchMedia&&matchMedia('(pointer:coarse)').matches)&&innerWidth<820));
 document.documentElement.classList.toggle('movel',MOVEL);
 const HOSP=/^https?:/.test(location.protocol);document.documentElement.classList.toggle('hosp',HOSP);
-let DG=['v2026.10.29-c','JavaScript ativo'];
+const VER='2026.11.04c';
+let DG=['v'+VER,'JavaScript ativo'];
 {let ls='ok';try{localStorage.setItem('_k','1');localStorage.removeItem('_k')}catch(e){ls='bloqueado'}DG.push('armazenamento '+ls)}
 try{const pk=document.getElementById('pacote');
  if(!pk)DG.push('sem pacote de Grade nesta página');
@@ -743,6 +747,17 @@ async function vcsv(){
 function aba(n){['conf','vend','grade','aj'].forEach(k=>{$('#v-'+k).classList.toggle('on',k===n);$('#t-'+k).classList.toggle('on',k===n)});$('#sub').textContent={conf:'Recebe',vend:'Modo Blecaute',grade:'Grade do ERP',aj:'Ajustes'}[n]||'';try{window.scrollTo(0,0)}catch(e){}}
 document.querySelectorAll('.tabs button').forEach(bt=>{bt.onclick=()=>aba(bt.dataset.tab)});
 $('#gchip').onclick=()=>aba('grade');
+$('#ver').textContent=VER;
+try{const dd=document.lastModified;if(dd)$('#verd').textContent=dd.slice(0,10)}catch(e){}
+$('#bupd').onclick=async()=>{
+ const m=$('#updm'),say=(t,e)=>{m.className=e?'hint err':'hint';m.textContent=t};
+ say('Procurando atualização…');
+ try{
+  if('caches' in window){const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}
+  if('serviceWorker' in navigator){const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.unregister()))}
+  say('Recarregando com a versão nova…');
+  setTimeout(()=>{const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())},400);
+ }catch(e){say('Não foi possível atualizar agora ('+((e&&e.message)||'erro')+'). Feche e abra o aplicativo.',1)}};
 let EVI=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();EVI=e;$('#binst').hidden=false});
 $('#binst').onclick=async()=>{if(!EVI)return;EVI.prompt();try{await EVI.userChoice}catch(x){}EVI=null;$('#binst').hidden=true};

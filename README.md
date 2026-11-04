@@ -7,7 +7,7 @@ Aplicativo web (PWA) de operação de loja do Mercado Kostta, com dois módulos 
 
 - **Repositório:** https://github.com/fabiogoncalvessilva-cmd/Kostta-Recebe
 - **Aplicativo (GitHub Pages):** https://fabiogoncalvessilva-cmd.github.io/Kostta-Recebe/
-- **Versão:** 2026.11.04c · arquivo único `index.html`, sem servidor, dados só no aparelho
+- **Versão:** 2026.11.04c (mostrada em Ajustes) · arquivo único `index.html`, sem servidor, dados só no aparelho
 
 ## 1. Fluxo de uso
 
@@ -95,7 +95,7 @@ Preço usado: `P.VENDA` da Grade. A lista e as vendas fechadas ficam guardadas n
 
 - **Arquivos** (mesma pasta): `index.html`, `manifest.webmanifest`, `sw.js`, `icon-192.png`, `icon-512.png`, `icon-512-maskable.png`, `apple-touch-icon.png`.
 - **Hospedagem:** GitHub Pages (repositório público, branch `main`, raiz). O repositório não contém Grade, custos nem preços.
-- **Atualizar:** substituir `index.html` (e `sw.js`, se mudar) no repositório. O app pega a versão nova ao abrir com internet; se necessário, abrir duas vezes.
+- **Atualizar:** substituir `index.html` (e `sw.js`, se mudar) no repositório. O app pega a versão nova ao abrir com internet; se necessário, abrir duas vezes. Se continuar antigo, usar **Ajustes > Buscar atualização** (limpa o cache e o service worker, sem apagar Grade, embalagens ou vendas). A versão instalada aparece em Ajustes.
 - **Instalar (Android/Chrome):** abrir o endereço github.io, menu ⋮ > Adicionar à tela inicial > **Instalar** (a opção "Criar atalho" não instala o app). iPhone (Safari): Compartilhar > Adicionar à Tela de Início.
 - **Alternativa sem hospedagem:** *Salvar página com a Grade* gera um HTML com a Grade e as configurações embutidas, para abrir no Chrome do celular (não pela visualização do Drive). **Contém custos e preços: manter privado.**
 
