@@ -7,7 +7,7 @@ Aplicativo web (PWA) de operação de loja do Mercado Kostta, com dois módulos 
 
 - **Repositório:** https://github.com/fabiogoncalvessilva-cmd/Kostta-Recebe
 - **Aplicativo (GitHub Pages):** https://fabiogoncalvessilva-cmd.github.io/Kostta-Recebe/
-- **Versão:** 2026.11.04b · arquivo único `index.html`, sem servidor, dados só no aparelho
+- **Versão:** 2026.11.04c · arquivo único `index.html`, sem servidor, dados só no aparelho
 
 ## 1. Fluxo de uso
 
@@ -68,9 +68,10 @@ Objetivo: registrar vendas no celular quando o caixa está fora do ar, usando a 
 5. **Fechar venda**: grava a venda no período e limpa os itens marcados (os desmarcados ficam na lista). **Compartilhar** e **Exportar CSV** valem para a lista atual; **Zerar lista** limpa tudo.
 
 **Fechamento do período** (bloco abaixo da lista):
-- Cartão com vendas fechadas, produtos distintos e **total vendido**.
+- Cartão com vendas, itens, **total vendido**, produtos distintos, ticket médio e período.
 - Detalhes: vendas uma a uma (hora, produtos, valor, com ✕ para excluir) e produtos vendidos consolidados.
-- **Relatório geral**: texto para WhatsApp com as vendas, os produtos consolidados e o total — serve para confrontar com o caixa.
+- **Resumo do período**: texto curto para WhatsApp com vendas, itens, produtos distintos, ticket médio, maior venda, **total vendido** e os 5 mais vendidos — é o que se usa para confrontar com o caixa.
+- **Relatório detalhado**: as vendas uma a uma e todos os produtos consolidados.
 - **Exportar CSV**: uma linha por item, com o número da venda e a linha de total (`Kostta_blecaute_AAAAMMDD_HHMM.csv`).
 - **Encerrar período**: apaga as vendas fechadas, com confirmação. Compartilhe ou exporte antes.
 

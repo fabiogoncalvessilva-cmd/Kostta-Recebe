@@ -165,7 +165,7 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 <section class="box">
   <b class="t">Fechamento do período</b>
   <div id="vhist"></div>
-  <div class="btns" id="vhbtn" hidden><button class="btn pri" id="bvhs">Relatório geral</button><button class="btn" id="bvhc">Exportar CSV</button><button class="btn" id="bvhz">Encerrar período</button></div>
+  <div class="btns" id="vhbtn" hidden><button class="btn pri" id="bvhr">Resumo do período</button><button class="btn" id="bvhs">Relatório detalhado</button><button class="btn" id="bvhc">Exportar CSV</button><button class="btn" id="bvhz">Encerrar período</button></div>
   <p id="vhmsg" class="hint"></p>
 </section>
 </div>
@@ -663,6 +663,22 @@ function vfecha(){
  vhsalva();VD=VD.filter(x=>!x.on);vsalva();vdraw();
  vmsg('Venda '+VH.length+' fechada: <b>'+R(t.soma)+'</b>. Lista pronta para o próximo cliente.')}
 function vhtotal(){return VH.reduce((s,v)=>s+v.total,0)}
+function vhnum(){
+ const itens=VH.reduce((s,v)=>s+v.itens.reduce((a,i)=>a+i.q,0),0),tot=vhtotal();
+ return {vendas:VH.length,itens:Math.round(itens*1000)/1000,total:tot,ticket:VH.length?tot/VH.length:0,
+  ini:VH.length?VH[0].ts:0,fim:VH.length?VH[VH.length-1].ts:0}}
+function vhresumo(){
+ if(!VH.length)return '';
+ const s=vhnum(),n=x=>String(Math.round(x*1000)/1000).replace('.',','),c=consolidado();
+ return '*Kostta Loja · Modo Blecaute · resumo*\n'
+  +'Período: '+hora(s.ini)+' a '+hora(s.fim)+'\n\n'
+  +'Vendas: '+s.vendas+'\n'
+  +'Itens vendidos: '+n(s.itens)+'\n'
+  +'Produtos distintos: '+c.length+'\n'
+  +'Ticket médio: '+R(s.ticket)+'\n'
+  +'Maior venda: '+R(Math.max.apply(null,VH.map(v=>v.total)))+'\n\n'
+  +'*TOTAL VENDIDO: '+R(s.total)+'*\n\n'
+  +'Mais vendidos\n'+c.slice(0,5).map((x,i)=>(i+1)+') '+x.desc+' · '+n(x.q)+' un · '+R(x.v)).join('\n')}
 function consolidado(){
  const m=new Map();
  VH.forEach(v=>v.itens.forEach(i=>{const k=i.cod||i.ean,o=m.get(k)||{desc:i.desc,cod:k,q:0,v:0};o.q=Math.round((o.q+i.q)*1000)/1000;o.v+=i.q*i.pv;m.set(k,o)}));
@@ -675,11 +691,11 @@ function vhtexto(){
  const c=consolidado();
  t+='\n\n*Produtos vendidos ('+c.length+')*\n'+c.map(x=>'• '+x.cod+' · '+x.desc+' · '+n(x.q)+' un · '+R(x.v)).join('\n');
  return t+'\n\n*TOTAL VENDIDO: '+R(vhtotal())+'*'}
-async function vhshare(){
+async function vhshare(tipo){
  if(!VH.length){vhmsg('Nenhuma venda fechada ainda.',1);return}
- const t=vhtexto();
- try{if(navigator.share){await navigator.share({title:'Fechamento Modo Blecaute',text:t});vhmsg('Relatório enviado para o compartilhamento.');return}}catch(e){if(e&&e.name==='AbortError')return}
- try{await navigator.clipboard.writeText(t);vhmsg('Relatório copiado. Cole no WhatsApp.')}catch(e){vhmsg('Não consegui copiar. Use Exportar CSV.',1)}}
+ const t=tipo==='resumo'?vhresumo():vhtexto();
+ try{if(navigator.share){await navigator.share({title:'Modo Blecaute · '+(tipo==='resumo'?'resumo':'relatório'),text:t});vhmsg('Enviado para o compartilhamento.');return}}catch(e){if(e&&e.name==='AbortError')return}
+ try{await navigator.clipboard.writeText(t);vhmsg('Copiado. Cole no WhatsApp.')}catch(e){vhmsg('Não consegui copiar. Use Exportar CSV.',1)}}
 async function vhcsv(){
  if(!VH.length){vhmsg('Nenhuma venda fechada ainda.',1);return}
  const z=n=>String(n).padStart(2,'0'),d=new Date(),q=s=>{s=String(s==null?'':s);return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s},f=v=>Number(v||0).toFixed(2).replace('.',',');
@@ -693,7 +709,9 @@ function vhdraw(){
  if(!VH.length){el.innerHTML='<p class="hint">Nenhuma venda fechada. Monte a lista acima e toque em Fechar venda.</p>';$('#vhbtn').hidden=true;return}
  $('#vhbtn').hidden=false;
  const c=consolidado(),n=x=>String(Math.round(x*1000)/1000).replace('.',',');
- el.innerHTML='<div class="tot"><div><small>Vendas</small><b>'+VH.length+'</b></div><div><small>Produtos</small><b>'+c.length+'</b></div><div class="big"><small>Total vendido</small><b>'+R(vhtotal())+'</b></div></div>'
+ const s=vhnum();
+ el.innerHTML='<div class="tot"><div><small>Vendas</small><b>'+s.vendas+'</b></div><div><small>Itens</small><b>'+n(s.itens)+'</b></div><div class="big"><small>Total vendido</small><b>'+R(s.total)+'</b></div></div>'
+ +'<div class="gm" style="margin-top:8px"><div><small>Produtos</small><b>'+c.length+'</b></div><div><small>Ticket médio</small><b>'+R(s.ticket)+'</b></div><div><small>Período</small><b style="font-size:12.5px">'+hora(s.ini)+' › '+hora(s.fim)+'</b></div></div>'
  +'<details class="hint"><summary>Vendas fechadas</summary>'+VH.map((v,i)=>(i+1)+') '+hora(v.ts)+' · '+v.itens.length+' prod. · <b>'+R(v.total)+'</b> <button class="vx" data-vh="'+i+'" title="Excluir venda">✕</button>').join('<br>')+'</details>'
  +'<details class="hint"><summary>Produtos vendidos</summary>'+c.map(x=>esc(x.cod)+' · '+esc(x.desc)+' · '+n(x.q)+' un · <b>'+R(x.v)+'</b>').join('<br>')+'</details>'}
 function vtotal(){let n=0,itens=0,soma=0;VD.forEach(x=>{if(x.on){n++;itens+=x.q;soma+=x.q*x.pv}});return {n,itens,soma}}
@@ -742,7 +760,7 @@ $('#vlista').onchange=e=>{const s=e.target.dataset.vs,q=e.target.dataset.vq;
  if(q!=null){const n=parseFloat(String(e.target.value).replace(',','.'));VD[+q].q=(isFinite(n)&&n>0)?Math.round(n*1000)/1000:1;vsalva();vdraw()}};
 $('#vlista').onclick=e=>{const r=e.target.dataset.vr;if(r!=null){VD.splice(+r,1);vsalva();vdraw()}};
 $('#bvs').onclick=vshare;$('#bvc').onclick=vcsv;$('#bvf2').onclick=vfecha;
-$('#bvhs').onclick=vhshare;$('#bvhc').onclick=vhcsv;
+$('#bvhr').onclick=()=>vhshare('resumo');$('#bvhs').onclick=()=>vhshare('detalhe');$('#bvhc').onclick=vhcsv;
 $('#vhist').onclick=e=>{const i=e.target.dataset.vh;if(i!=null){VH.splice(+i,1);vhsalva();vdraw();vhmsg('Venda excluída.')}};
 $('#bvhz').onclick=()=>{if(!VH.length)return;if(!confirm('Encerrar o período e apagar as '+VH.length+' vendas fechadas? Compartilhe ou exporte antes.'))return;VH=[];vhsalva();vdraw();vhmsg('Período encerrado.')};
 $('#bvl').onclick=()=>{if(!VD.length)return;VD=[];vsalva();vdraw();vmsg('Lista zerada.')};
