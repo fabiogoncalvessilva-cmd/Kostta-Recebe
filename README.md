@@ -7,12 +7,12 @@ Aplicativo web (PWA) de operação de loja do Mercado Kostta, com dois módulos 
 
 - **Repositório:** https://github.com/fabiogoncalvessilva-cmd/Kostta-Recebe
 - **Aplicativo (GitHub Pages):** https://fabiogoncalvessilva-cmd.github.io/Kostta-Recebe/
-- **Versão:** 2026.11.04c (mostrada em Ajustes) · arquivo único `index.html`, sem servidor, dados só no aparelho
+- **Versão:** 2026.11.06 (mostrada em Ajustes) · arquivo único `index.html`, sem servidor, dados só no aparelho
 
 ## 1. Fluxo de uso
 
 1. **Grade** (computador): aba *Grade* > Carregar Grade (relatório do ERP). No celular hospedado, o mesmo botão aparece na aba *Grade*.
-2. **Chave** (opcional): *Tirar foto da chave* / *Foto da galeria* (código de barras ou QR) ou colar os 44 dígitos. A chave é validada e copiada.
+2. **Chave** (opcional): *Tirar foto da chave* / *Foto da galeria*. A leitura é automática e tenta, nesta ordem, código de barras, QR Code e os 44 números impressos (OCR, baixa uma biblioteca na primeira vez). Também aceita colar os 44 dígitos. A chave é validada e copiada.
 3. **XML**: *Abrir Meu DANFE* (manual), baixar o XML, depois *Buscar XML* (dispositivo ou Drive).
 4. **Conferir** cada item (cartões ou lista resumida), marcar *Preço ajustado*, compartilhar a lista ou exportar o CSV.
 
@@ -61,7 +61,7 @@ A lista resumida mostra código interno, descrição e status. O texto compartil
 
 Objetivo: registrar vendas no celular quando o caixa está fora do ar, usando a mesma Grade.
 
-1. **Ler código do produto** (câmera ou galeria): EAN-13, EAN-8, UPC, Code 128, Code 39 e ITF. Ou digitar código interno, EAN ou parte do nome; com vários resultados, a página lista as opções.
+1. **Ler código do produto** (câmera ou galeria): EAN-13, EAN-8, UPC, Code 128, Code 39 e ITF. Ou digitar o código de barras ou o código interno; o campo aceita apenas números e abre o teclado numérico.
 2. Cada item entra com **quantidade 1**, editável (aceita fração, ex.: `2,5` para granel). Ler o mesmo produto de novo soma a quantidade e o traz para o topo.
 3. **Caixa de seleção** por item: só os marcados entram no total. O **✕** remove o item.
 4. **Totalizador**: produtos, itens e total em destaque.
