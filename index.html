@@ -165,7 +165,7 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 <section class="box">
   <b class="t">Fechamento do período</b>
   <div id="vhist"></div>
-  <div class="btns" id="vhbtn" hidden><button class="btn pri" id="bvhr">Resumo do período</button><button class="btn" id="bvhs">Relatório detalhado</button><button class="btn" id="bvhc">Exportar CSV</button><button class="btn" id="bvhz">Encerrar período</button></div>
+  <div class="btns" id="vhbtn" hidden><button class="btn pri" id="bvhr">Resumo do período</button><button class="btn" id="bvhs">Relatório detalhado</button><button class="btn" id="bvhc">Exportar CSV</button><button class="btn" id="bvht">Total da loja</button><button class="btn" id="bvhz">Encerrar período</button></div>
   <p id="vhmsg" class="hint"></p>
 </section>
 </div>
@@ -176,6 +176,7 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
   <div id="sg"></div>
   <div>
     <div class="btns"><button class="btn gload" id="bfg">Carregar Grade</button><input id="fg" type="file" hidden><button class="btn only-pc" id="bsg">Salvar página com a Grade</button></div>
+    <div class="btns"><button class="btn only-pc" id="bgpub">Publicar Grade na nuvem</button><button class="btn" id="bgbaixa">Baixar Grade da nuvem</button></div>
     <p id="gmsg" class="hint"></p>
     <p id="sgm" class="hint only-pc">Carregue a Grade exportada do ERP. Para usar no celular, salve a página com a Grade e coloque o arquivo no Drive.</p>
   </div>
@@ -183,6 +184,11 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 </section>
 </div>
 <div class="view" id="v-aj">
+<section class="box">
+  <b class="t">Nuvem · Grade e vendas compartilhadas</b>
+  <div id="nbox"></div>
+  <p id="nmsg" class="hint"></p>
+</section>
 <details class="box" open><summary>Parâmetros</summary><div id="pp"></div><div class="btns"><button class="btn" id="bd">Ver exemplo (dados fictícios)</button></div></details>
 <section class="box">
   <b class="t">Aplicativo</b>
@@ -227,7 +233,7 @@ function buildIdx(rows){idx=new Map();byCod=new Map();for(const r of rows){const
 const MOVEL=!!(/Android|iPhone|iPad|iPod|Mobile|Silk/i.test(navigator.userAgent||'')||((window.matchMedia&&matchMedia('(pointer:coarse)').matches)&&innerWidth<820));
 document.documentElement.classList.toggle('movel',MOVEL);
 const HOSP=/^https?:/.test(location.protocol);document.documentElement.classList.toggle('hosp',HOSP);
-const VER='2026.11.04c';
+const VER='2026.11.05';
 let DG=['v'+VER,'JavaScript ativo'];
 {let ls='ok';try{localStorage.setItem('_k','1');localStorage.removeItem('_k')}catch(e){ls='bloqueado'}DG.push('armazenamento '+ls)}
 try{const pk=document.getElementById('pacote');
@@ -518,7 +524,7 @@ function draw(){
  if(A.length>=5&&cnt.cad/A.length>0.3)h+='<div class="hint err">Muitos itens não cadastrados. Confirme se a Grade do ERP está atualizada.</div>';
  {const c={alta:0,baixa:0,igual:0,nd:0};A.forEach(a=>{if(a.vcl)c[a.vcl]++;else if(a.cod)c.nd++});
   h+='<div class="hint">Custo vs ERP: <b>▲ '+c.alta+'</b> subiram · <b>▼ '+c.baixa+'</b> caíram · '+c.igual+' sem alteração'+(c.nd?' · '+c.nd+' sem custo no ERP':'')+'</div>'}
- h+='<div class="btns"><button class="btn" data-ex="1">Exportar conferência (CSV)</button><button class="btn" data-lp="1">Limpar nota</button></div><p id="exmsg" class="hint"></p>';
+ h+='<div class="btns"><button class="btn" data-ex="1">Exportar conferência (CSV)</button><button class=\"btn\" data-cl=\"1\">Enviar para a nuvem</button><button class="btn" data-lp="1">Limpar nota</button></div><p id="exmsg" class="hint"></p>';
  h+='</div><div class="seg"><button class="chip'+(VISTA==='completa'?' on':'')+'" data-v="completa">Visualização completa</button><button class="chip'+(VISTA==='resumida'?' on':'')+'" data-v="resumida">Visualização resumida</button></div><div class="chips">';
  const chips=[['todos','Todos',A.length],['emb','Embalagem',cnt.emb],['cad','Cadastrar',cnt.cad],['aj','Ajustar',cnt.aj],['at','Atenção',cnt.at],['ok','Liberados',cnt.ok],['cu','Custo alterado',cnt.cu]];
  h+=chips.map(c=>'<button class="chip'+(filtro===c[0]?' on':'')+'" data-f="'+c[0]+'">'+c[1]+' ('+c[2]+')</button>').join('')+'</div>';
@@ -565,7 +571,8 @@ $('#pp').onchange=e=>{const k=e.target.dataset.k;if(!k)return;const v=e.target.v
 $('#pp').onclick=e=>{const x=e.target.dataset.x,y=e.target.dataset.y;
  if(y){delete LINK[y];LS.set('link',LINK);params();draw();return}
  if(x){delete MEM[x];LS.set('mem',MEM);params();draw()}};
-$('#res').onclick=e=>{const f=e.target.dataset.f,u=e.target.dataset.u,l=e.target.dataset.l,v=e.target.dataset.v,sh=e.target.dataset.sh,ex=e.target.dataset.ex,lp=e.target.dataset.lp;
+$('#res').onclick=e=>{const f=e.target.dataset.f,u=e.target.dataset.u,l=e.target.dataset.l,v=e.target.dataset.v,sh=e.target.dataset.sh,ex=e.target.dataset.ex,lp=e.target.dataset.lp,cl=e.target.dataset.cl;
+ if(cl){confEnvia();return}
  if(lp){limpar();return}
  if(ex){baixaCSV();return}
  if(v){VISTA=v;LS.set('vista',VISTA);draw();return}
@@ -665,6 +672,7 @@ function vfecha(){
  if(!t.n){vmsg('Marque ao menos um produto para fechar a venda.',1);return}
  VH.push({ts:Date.now(),itens:VD.filter(x=>x.on).map(x=>({cod:x.cod,ean:x.ean,desc:x.desc,pv:x.pv,q:x.q})),total:Math.round(t.soma*100)/100});
  vhsalva();VD=VD.filter(x=>!x.on);vsalva();vdraw();
+ if(logado())vendaEnvia(VH[VH.length-1]).then(()=>vdraw()).catch(()=>{});
  vmsg('Venda '+VH.length+' fechada: <b>'+R(t.soma)+'</b>. Lista pronta para o próximo cliente.')}
 function vhtotal(){return VH.reduce((s,v)=>s+v.total,0)}
 function vhnum(){
@@ -716,7 +724,7 @@ function vhdraw(){
  const s=vhnum();
  el.innerHTML='<div class="tot"><div><small>Vendas</small><b>'+s.vendas+'</b></div><div><small>Itens</small><b>'+n(s.itens)+'</b></div><div class="big"><small>Total vendido</small><b>'+R(s.total)+'</b></div></div>'
  +'<div class="gm" style="margin-top:8px"><div><small>Produtos</small><b>'+c.length+'</b></div><div><small>Ticket médio</small><b>'+R(s.ticket)+'</b></div><div><small>Período</small><b style="font-size:12.5px">'+hora(s.ini)+' › '+hora(s.fim)+'</b></div></div>'
- +'<details class="hint"><summary>Vendas fechadas</summary>'+VH.map((v,i)=>(i+1)+') '+hora(v.ts)+' · '+v.itens.length+' prod. · <b>'+R(v.total)+'</b> <button class="vx" data-vh="'+i+'" title="Excluir venda">✕</button>').join('<br>')+'</details>'
+ +'<details class="hint"><summary>Vendas fechadas</summary>'+VH.map((v,i)=>(i+1)+') '+hora(v.ts)+' · '+v.itens.length+' prod. · <b>'+R(v.total)+'</b>'+(logado()&&!v.nuvem?' <span class="badge c-warn">a enviar</span>':'')+' <button class="vx" data-vh="'+i+'" title="Excluir venda">✕</button>').join('<br>')+'</details>'
  +'<details class="hint"><summary>Produtos vendidos</summary>'+c.map(x=>esc(x.cod)+' · '+esc(x.desc)+' · '+n(x.q)+' un · <b>'+R(x.v)+'</b>').join('<br>')+'</details>'}
 function vtotal(){let n=0,itens=0,soma=0;VD.forEach(x=>{if(x.on){n++;itens+=x.q;soma+=x.q*x.pv}});return {n,itens,soma}}
 function vtexto(){const t=vtotal(),z=n=>String(n).padStart(2,'0'),d=new Date();
@@ -744,6 +752,109 @@ async function vcsv(){
  const t=vtotal(),linhas=VD.filter(x=>x.on).map(x=>[ts,x.cod,x.ean,x.desc,String(x.q).replace('.',','),f(x.pv),f(x.q*x.pv)].map(q).join(';'));
  const csv='\uFEFF'+'data_hora;cod_interno;ean;descricao;quantidade;preco_venda;subtotal\r\n'+linhas.join('\r\n')+'\r\n;;;;;TOTAL;'+f(t.soma)+'\r\n';
  await entrega('Kostta_venda_'+d.getFullYear()+z(d.getMonth()+1)+z(d.getDate())+'_'+z(d.getHours())+z(d.getMinutes())+'.csv',csv,'text/csv;charset=utf-8','#vmsg')}
+const SB_URL_PADRAO='https://ydaqaktlwjhsxidivibv.supabase.co',SB_KEY='sb_publishable_Qzg09jZ7sZ3li2kcC4CLjQ_RAnFXrej';
+let SBU=LS.get('sburl',SB_URL_PADRAO), SESS=LS.get('sess',null), APAR=LS.get('aparelho','');
+function logado(){return !!(SESS&&SESS.access_token)}
+function sbhead(j){const o={apikey:SB_KEY};if(SESS&&SESS.access_token)o.Authorization='Bearer '+SESS.access_token;if(j)o['Content-Type']='application/json';return o}
+async function sbRenova(){
+ if(!SESS||!SESS.refresh_token)return false;
+ try{const r=await fetch(SBU+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:SESS.refresh_token})});
+  if(!r.ok)return false;const d=await r.json();if(!d.access_token)return false;
+  SESS={access_token:d.access_token,refresh_token:d.refresh_token,email:(d.user&&d.user.email)||SESS.email};LS.set('sess',SESS);return true}
+ catch(e){return false}}
+async function sb(caminho,op,repetir){
+ op=op||{};const o=Object.assign({},op);
+ o.headers=Object.assign(sbhead(o.body!=null&&typeof o.body!=='string'),op.headers||{});
+ if(o.body!=null&&typeof o.body!=='string')o.body=JSON.stringify(o.body);
+ const r=await fetch(SBU+caminho,o);
+ if(r.status===401&&!repetir&&await sbRenova())return sb(caminho,op,true);
+ if(!r.ok){let t='';try{t=(await r.text()).slice(0,200)}catch(e){}
+  const err=new Error(r.status===401?'Sessão expirada: entre de novo.':(r.status+' '+(t||r.statusText)));err.status=r.status;throw err}
+ return r}
+async function sbLogin(email,senha){
+ const r=await fetch(SBU+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({email,password:senha})});
+ const d=await r.json().catch(()=>({}));
+ if(!r.ok||!d.access_token)throw new Error(d.error_description||d.msg||d.message||'E-mail ou senha incorretos.');
+ SESS={access_token:d.access_token,refresh_token:d.refresh_token,email:(d.user&&d.user.email)||email};LS.set('sess',SESS);return SESS}
+function sbLogout(){SESS=null;LS.set('sess',null)}
+const iso=t=>new Date(t).toISOString();
+function nuvem(t,e){const m=$('#nmsg');if(m){m.className=e?'hint err':'hint';m.innerHTML=t||''}}
+async function gradePublica(){
+ if(!G){nuvem('Carregue a Grade antes de publicar.',1);return}
+ if(!logado()){nuvem('Entre na nuvem para publicar.',1);return}
+ nuvem('Publicando a Grade… ('+G.n.toLocaleString('pt-BR')+' produtos)');
+ try{
+  await sb('/storage/v1/object/grade/grade.json',{method:'POST',headers:{'Content-Type':'application/json','x-upsert':'true'},body:JSON.stringify({ts:G.ts,n:G.n,rows:G.rows})});
+  await sb('/rest/v1/grade_info',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:[{id:1,atualizada_em:iso(G.ts),produtos:G.n}]});
+  nuvem('✓ Grade publicada. Os celulares recebem ao abrir o aplicativo.')}
+ catch(e){nuvem('Não foi possível publicar ('+esc(e.message)+').',1)}}
+async function gradeBaixa(forcar){
+ if(!logado()){if(forcar)nuvem('Entre na nuvem para baixar a Grade.',1);return false}
+ try{
+  const r=await sb('/rest/v1/grade_info?select=atualizada_em,produtos&id=eq.1'),L=await r.json();
+  if(!L.length){if(forcar)nuvem('Nenhuma Grade publicada ainda.',1);return false}
+  const ts=Date.parse(L[0].atualizada_em);
+  if(!forcar&&G&&G.ts>=ts){nuvem('A Grade deste aparelho já está em dia.');return false}
+  nuvem('Baixando a Grade publicada…');
+  const g=await (await sb('/storage/v1/object/grade/grade.json')).json();
+  if(!g.rows||!g.rows.length)throw new Error('arquivo vazio');
+  G={ts:ts||g.ts,n:g.n||g.rows.length,rows:g.rows,src:'nuvem'};buildIdx(G.rows);
+  const ok=LS.set('grade',G);draw();
+  nuvem('✓ Grade atualizada: '+G.n.toLocaleString('pt-BR')+' produtos.'+(ok?'':' (sem espaço para guardar: vale só nesta sessão)'));return true}
+ catch(e){nuvem('Não foi possível baixar a Grade ('+esc(e.message)+').',1);return false}}
+async function vendaEnvia(v){
+ const r=await sb('/rest/v1/vendas',{method:'POST',headers:{Prefer:'return=minimal'},body:{aparelho:APAR||'sem nome',total:v.total,itens:v.itens}});
+ v.nuvem=true;vhsalva();return r}
+async function sincroniza(silencioso){
+ if(!logado()){if(!silencioso)nuvem('Entre na nuvem para sincronizar.',1);return}
+ const pend=VH.filter(v=>!v.nuvem);
+ if(!pend.length){if(!silencioso)nuvem('Nada pendente para enviar.');return}
+ if(!silencioso)nuvem('Enviando '+pend.length+(pend.length===1?' venda…':' vendas…'));
+ let ok=0;
+ for(const v of pend){try{await vendaEnvia(v);ok++}catch(e){if(!silencioso)nuvem('Enviadas '+ok+' de '+pend.length+'. Erro: '+esc(e.message),1);vdraw();return}}
+ vdraw();if(!silencioso)nuvem('✓ '+ok+(ok===1?' venda enviada.':' vendas enviadas.'))}
+async function totalLoja(){
+ if(!logado()){vhmsg('Entre na nuvem (Ajustes) para ver o total da loja.',1);return}
+ vhmsg('Consultando o total da loja…');
+ try{
+  const d=new Date();d.setHours(0,0,0,0);
+  const L=await (await sb('/rest/v1/vendas?select=total,aparelho,criada_em&criada_em=gte.'+iso(d.getTime()))).json();
+  const soma=L.reduce((s,v)=>s+(+v.total||0),0),ap={};L.forEach(v=>{const k=v.aparelho||'sem nome';ap[k]=(ap[k]||0)+(+v.total||0)});
+  vhmsg('<b>Total da loja hoje: '+R(soma)+'</b> · '+L.length+(L.length===1?' venda':' vendas')+'<br>'+Object.keys(ap).map(k=>esc(k)+': '+R(ap[k])).join('<br>'))}
+ catch(e){vhmsg('Não foi possível consultar ('+esc(e.message)+').',1)}}
+async function confEnvia(){
+ const m=$('#exmsg'),say=(t,e)=>{m.className=e?'hint err':'hint';m.innerHTML=t};
+ if(!logado()){say('Entre na nuvem (Ajustes) para enviar.',1);return}
+ if(!raw.length||demo){say('Carregue uma nota real primeiro.',1);return}
+ const L=raw.map(analisa).map(a=>({nf:a.nf,fornecedor:a.forn,chave_nfe:a.chave||null,cod_interno:a.cod||null,ean:a.cT||a.cE,descricao:a.desc,
+  custo_nota:a.custo,custo_erp:a.cE||null,preco_atual:a.venda||null,preco_sugerido:a.sug||null,lucro_pct:a.lv==null?null:Math.round(a.lv*10000)/100,status:STX[a.s],chave_linha:a.nf+'|'+a.n+'|'+(a.cT||a.cE)}));
+ say('Enviando '+L.length+' itens…');
+ try{await sb('/rest/v1/conferencias',{method:'POST',headers:{Prefer:'return=minimal,resolution=ignore-duplicates'},body:L});
+  say('✓ '+L.length+' itens enviados para a nuvem.')}
+ catch(e){say('Não foi possível enviar ('+esc(e.message)+').',1)}}
+function nuvemDraw(){
+ const b=$('#nbox');if(!b)return;
+ b.innerHTML=logado()
+  ?'<div class="gm"><div><small>Conectado como</small><b style="font-size:12.5px;overflow-wrap:anywhere">'+esc(SESS.email||'—')+'</b></div><div><small>Aparelho</small><b style="font-size:12.5px">'+esc(APAR||'sem nome')+'</b></div></div>'
+   +'<label class="kl">Nome deste aparelho<input id="napar" value="'+esc(APAR)+'" placeholder="Ex.: Celular caixa 1"></label>'
+   +'<div class="btns"><button class="btn" id="nsinc">Sincronizar agora</button><button class="btn only-pc" id="npub">Publicar Grade</button><button class="btn" id="nbaixa">Baixar Grade</button><button class="btn" id="nsair">Sair</button></div>'
+  :'<label class="kl">E-mail<input id="nmail" type="email" autocomplete="username" placeholder="seu@email.com"></label>'
+   +'<label class="kl">Senha<input id="nsenha" type="password" autocomplete="current-password"></label>'
+   +'<div class="btns"><button class="btn pri" id="nentra">Entrar</button></div>';
+ const el=id=>$('#'+id);
+ if(logado()){
+  el('napar').onchange=e=>{APAR=e.target.value.trim().slice(0,40);LS.set('aparelho',APAR);nuvemDraw();nuvem('Nome do aparelho salvo.')};
+  el('nsinc').onclick=()=>sincroniza();el('nbaixa').onclick=()=>gradeBaixa(true);
+  const pb=el('npub');if(pb)pb.onclick=gradePublica;
+  el('nsair').onclick=()=>{sbLogout();nuvemDraw();nuvem('Sessão encerrada neste aparelho.')}}
+ else{
+  el('nentra').onclick=async()=>{
+   const em=el('nmail').value.trim(),se=el('nsenha').value;
+   if(!em||!se){nuvem('Informe e-mail e senha.',1);return}
+   nuvem('Entrando…');
+   try{await sbLogin(em,se);nuvemDraw();nuvem('✓ Conectado como '+esc(SESS.email));gradeBaixa(false);sincroniza(true)}
+   catch(e){nuvem(esc(e.message),1)}};
+  el('nsenha').onkeydown=e=>{if(e.key==='Enter')el('nentra').onclick()}}}
 function aba(n){['conf','vend','grade','aj'].forEach(k=>{$('#v-'+k).classList.toggle('on',k===n);$('#t-'+k).classList.toggle('on',k===n)});$('#sub').textContent={conf:'Recebe',vend:'Modo Blecaute',grade:'Grade do ERP',aj:'Ajustes'}[n]||'';try{window.scrollTo(0,0)}catch(e){}}
 document.querySelectorAll('.tabs button').forEach(bt=>{bt.onclick=()=>aba(bt.dataset.tab)});
 $('#gchip').onclick=()=>aba('grade');
@@ -775,13 +886,17 @@ $('#vlista').onchange=e=>{const s=e.target.dataset.vs,q=e.target.dataset.vq;
  if(q!=null){const n=parseFloat(String(e.target.value).replace(',','.'));VD[+q].q=(isFinite(n)&&n>0)?Math.round(n*1000)/1000:1;vsalva();vdraw()}};
 $('#vlista').onclick=e=>{const r=e.target.dataset.vr;if(r!=null){VD.splice(+r,1);vsalva();vdraw()}};
 $('#bvs').onclick=vshare;$('#bvc').onclick=vcsv;$('#bvf2').onclick=vfecha;
+$('#bvht').onclick=totalLoja;
 $('#bvhr').onclick=()=>vhshare('resumo');$('#bvhs').onclick=()=>vhshare('detalhe');$('#bvhc').onclick=vhcsv;
 $('#vhist').onclick=e=>{const i=e.target.dataset.vh;if(i!=null){VH.splice(+i,1);vhsalva();vdraw();vhmsg('Venda excluída.')}};
 $('#bvhz').onclick=()=>{if(!VH.length)return;if(!confirm('Encerrar o período e apagar as '+VH.length+' vendas fechadas? Compartilhe ou exporte antes.'))return;VH=[];vhsalva();vdraw();vhmsg('Período encerrado.')};
 $('#bvl').onclick=()=>{if(!VD.length)return;VD=[];vsalva();vdraw();vmsg('Lista zerada.')};
+$('#bgpub').onclick=()=>{aba('aj');gradePublica()};
+$('#bgbaixa').onclick=()=>{aba('aj');gradeBaixa(true)};
 $('#bfg').onclick=()=>{$('#gmsg').className='hint';$('#gmsg').textContent='Escolha o arquivo da Grade no seletor…';$('#fg').click()};$('#bfi').onclick=()=>$('#fi').click();$('#bfi2').onclick=()=>$('#fi2').click();
 $('#bxml').onclick=buscaXml;$('#bck').onclick=copiaChave;
-params();draw();vdraw();aba(G?'conf':'grade');
+params();draw();vdraw();nuvemDraw();aba(G?'conf':'grade');
+if(logado())setTimeout(()=>{gradeBaixa(false);sincroniza(true)},800);
 </script>
 </body>
 </html>
