@@ -216,7 +216,7 @@ const DEF={v:2,vt:1,pack:'fd,fdo,fardo,cx,cxa,cxs,caixa,dp,display,pack',mk:60,d
 const SP=LS.get('params',{});if(SP.v!==2){delete SP.ded;delete SP.min;delete SP.max}
 let P=Object.assign({},DEF,SP);
 let G=LS.get('grade',null), idx=new Map(), byCod=new Map(), SR={}, raw=[], filtro='todos', demo=false;
-let adj=new Set(LS.get('adj',[])), EMB=LS.get('emb',{}), FORN=LS.get('forn',{}), HIST=LS.get('hist',[]), MEM=LS.get('mem',{}), LINK=LS.get('link',{}), VISTA=LS.get('vista','completa'), CHAVE='', CHV=LS.get('chv',{});
+let adj=new Set(LS.get('adj',[])), EMB=LS.get('emb',{}), FORN=LS.get('forn',{}), HIST=LS.get('hist',[]), MEM=LS.get('mem',{}), LINK=LS.get('link',{}), LKTS=LS.get('lkts',{}), VISTA=LS.get('vista','completa'), CHAVE='', CHV=LS.get('chv',{});
 
 const nz=s=>String(s||'').replace(/\D/g,'').replace(/^0+/,'');
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -233,7 +233,7 @@ function buildIdx(rows){idx=new Map();byCod=new Map();for(const r of rows){const
 const MOVEL=!!(/Android|iPhone|iPad|iPod|Mobile|Silk/i.test(navigator.userAgent||'')||((window.matchMedia&&matchMedia('(pointer:coarse)').matches)&&innerWidth<820));
 document.documentElement.classList.toggle('movel',MOVEL);
 const HOSP=/^https?:/.test(location.protocol);document.documentElement.classList.toggle('hosp',HOSP);
-const VER='2026.11.06';
+const VER='2026.11.06b';
 let DG=['v'+VER,'JavaScript ativo'];
 {let ls='ok';try{localStorage.setItem('_k','1');localStorage.removeItem('_k')}catch(e){ls='bloqueado'}DG.push('armazenamento '+ls)}
 try{const pk=document.getElementById('pacote');
@@ -590,7 +590,7 @@ $('#pp').onchange=e=>{const k=e.target.dataset.k;if(!k)return;const v=e.target.v
  LS.set('params',P);params();draw()};
 
 $('#pp').onclick=e=>{const x=e.target.dataset.x,y=e.target.dataset.y;
- if(y){delete LINK[y];LS.set('link',LINK);params();draw();return}
+ if(y){delete LINK[y];delete LKTS[y];LS.set('link',LINK);LS.set('lkts',LKTS);params();draw();return}
  if(x){delete MEM[x];LS.set('mem',MEM);params();draw()}};
 $('#res').onclick=e=>{const f=e.target.dataset.f,u=e.target.dataset.u,l=e.target.dataset.l,v=e.target.dataset.v,sh=e.target.dataset.sh,ex=e.target.dataset.ex,lp=e.target.dataset.lp,cl=e.target.dataset.cl;
  if(cl){confEnvia();return}
@@ -598,16 +598,16 @@ $('#res').onclick=e=>{const f=e.target.dataset.f,u=e.target.dataset.u,l=e.target
  if(ex){baixaCSV();return}
  if(v){VISTA=v;LS.set('vista',VISTA);draw();return}
  if(sh){acaoShare(sh,($('#ta')||{}).value||'');return}
- if(l){const i=l.lastIndexOf('#');LINK[l.slice(0,i)]=l.slice(i+1);LS.set('link',LINK);SR={};params();draw();return}
+ if(l){const i=l.lastIndexOf('#');LINK[l.slice(0,i)]=l.slice(i+1);LKTS[l.slice(0,i)]=Date.now();LS.set('link',LINK);LS.set('lkts',LKTS);if(logado())embSync(true);SR={};params();draw();return}
  if(u){const i=u.lastIndexOf('#');setMem(u.slice(0,i),+u.slice(i+1),'m');LS.set('mem',MEM);params();draw();return}
  if(f){filtro=f;draw()}};
 $('#res').onchange=e=>{const ww=e.target.dataset.w,ss=e.target.dataset.s;
- if(ww){const kg=pesoInput(e.target.value);if(kg===null)delete MEM[ww];else if(!isNaN(kg))setMem(ww,0,'m',kg);LS.set('mem',MEM);params();draw();return}
+ if(ww){const kg=pesoInput(e.target.value);if(kg===null)delete MEM[ww];else if(!isNaN(kg))setMem(ww,0,'m',kg);LS.set('mem',MEM);if(logado())embSync(true);params();draw();return}
  if(ss){SR[ss]=busca(e.target.value);draw();return}
  const pp=e.target.dataset.p;
  if(pp){if(e.target.value)FORN[pp]=e.target.value;else delete FORN[pp];LS.set('forn',FORN);draw();return}
  const ee=e.target.dataset.e;
- if(ee){const n=parseInt(e.target.value,10);if(n>0)setMem(ee,n,'m');else delete MEM[ee];LS.set('mem',MEM);params();draw();return}
+ if(ee){const n=parseInt(e.target.value,10);if(n>0)setMem(ee,n,'m');else delete MEM[ee];LS.set('mem',MEM);if(logado())embSync(true);params();draw();return}
  const k=e.target.dataset.a;if(!k)return;
  e.target.checked?adj.add(k):adj.delete(k);LS.set('adj',[...adj]);draw()};
 
@@ -822,6 +822,37 @@ async function gradeBaixa(forcar){
   const ok=LS.set('grade',G);draw();
   nuvem('✓ Grade atualizada: '+G.n.toLocaleString('pt-BR')+' produtos.'+(ok?'':' (sem espaço para guardar: vale só nesta sessão)'));return true}
  catch(e){nuvem('Não foi possível baixar a Grade ('+esc(e.message)+').',1);return false}}
+function melhorEmb(a,b){
+ if(!b)return true;if(!a)return false;
+ if((a.o==='m')!==(b.o==='m'))return a.o==='m';
+ return (a.ts||0)>=(b.ts||0)}
+function embLinhas(){
+ return Object.keys(MEM).map(k=>{const m=MEM[k],p=k.split('|');
+  return {chave:k,cnpj:p[0]||'',ean:p[1]||'',fornecedor:m.fn||null,descricao:m.d||null,unidade:m.u||null,
+   fator:m.w!=null?null:(m.f||null),peso_g:m.w!=null?Math.round(m.w*10000)/10:null,origem:m.o||'a',atualizada_em:iso(m.ts||Date.now())}})}
+function linkLinhas(){
+ return Object.keys(LINK).map(k=>({ean:k,cod_interno:String(LINK[k]),descricao:(byCod.get(String(LINK[k]))||[])[2]||null,atualizada_em:iso(LKTS[k]||Date.now())}))}
+async function embSync(silencioso){
+ if(!logado()){if(!silencioso)nuvem('Entre na nuvem para sincronizar as embalagens.',1);return}
+ try{
+  if(!silencioso)nuvem('Sincronizando embalagens e associações…');
+  const E=await (await sb('/rest/v1/embalagens?select=*')).json();
+  let novas=0;
+  for(const r of E){
+   const ts=Date.parse(r.atualizada_em)||0,rem={f:r.fator||0,o:r.origem||'a',d:r.descricao||'',u:r.unidade||'',fn:r.fornecedor||'',ts};
+   if(r.peso_g!=null)rem.w=r.peso_g/1000;
+   if(melhorEmb(rem,MEM[r.chave])&&JSON.stringify(rem)!==JSON.stringify(MEM[r.chave])){MEM[r.chave]=rem;novas++}}
+  if(novas)LS.set('mem',MEM);
+  const A=await (await sb('/rest/v1/associacoes?select=*')).json();
+  let na=0;
+  for(const r of A){if(!LINK[r.ean]){LINK[r.ean]=r.cod_interno;LKTS[r.ean]=Date.parse(r.atualizada_em)||0;na++}}
+  if(na){LS.set('link',LINK);LS.set('lkts',LKTS)}
+  const le=embLinhas(),ll=linkLinhas();
+  if(le.length)await sb('/rest/v1/embalagens',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:le});
+  if(ll.length)await sb('/rest/v1/associacoes',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:ll});
+  if(novas||na){params();draw()}
+  if(!silencioso)nuvem('✓ Embalagens sincronizadas: '+le.length+' salvas, '+novas+' recebidas de outros aparelhos'+(na?' · '+na+' associações novas':'')+'.')}
+ catch(e){if(!silencioso)nuvem('Não foi possível sincronizar as embalagens ('+esc(e.message)+').',1)}}
 async function vendaEnvia(v){
  const r=await sb('/rest/v1/vendas',{method:'POST',headers:{Prefer:'return=minimal'},body:{aparelho:APAR||'sem nome',total:v.total,itens:v.itens}});
  v.nuvem=true;vhsalva();return r}
@@ -857,7 +888,7 @@ function nuvemDraw(){
  b.innerHTML=logado()
   ?'<div class="gm"><div><small>Conectado como</small><b style="font-size:12.5px;overflow-wrap:anywhere">'+esc(SESS.email||'—')+'</b></div><div><small>Aparelho</small><b style="font-size:12.5px">'+esc(APAR||'sem nome')+'</b></div></div>'
    +'<label class="kl">Nome deste aparelho<input id="napar" value="'+esc(APAR)+'" placeholder="Ex.: Celular caixa 1"></label>'
-   +'<div class="btns"><button class="btn" id="nsinc">Sincronizar agora</button><button class="btn only-pc" id="npub">Publicar Grade</button><button class="btn" id="nbaixa">Baixar Grade</button><button class="btn" id="nsair">Sair</button></div>'
+   +'<div class="btns"><button class="btn" id="nsinc">Sincronizar agora</button><button class="btn" id="nemb">Embalagens</button><button class="btn only-pc" id="npub">Publicar Grade</button><button class="btn" id="nbaixa">Baixar Grade</button><button class="btn" id="nsair">Sair</button></div>'
   :(HOSP?'':'<p class="hint err">Esta cópia é um arquivo local. Para usar a nuvem, abra o endereço do aplicativo (github.io).</p>')+'<label class="kl">E-mail<input id="nmail" type="email" autocomplete="username" placeholder="seu@email.com"></label>'
    +'<label class="kl">Senha<input id="nsenha" type="password" autocomplete="current-password"></label>'
    +'<div class="btns"><button class="btn pri" id="nentra">Entrar</button></div>'
@@ -865,7 +896,7 @@ function nuvemDraw(){
  const el=id=>$('#'+id);
  if(logado()){
   el('napar').onchange=e=>{APAR=e.target.value.trim().slice(0,40);LS.set('aparelho',APAR);nuvemDraw();nuvem('Nome do aparelho salvo.')};
-  el('nsinc').onclick=()=>sincroniza();el('nbaixa').onclick=()=>gradeBaixa(true);
+  el('nsinc').onclick=()=>sincroniza();el('nemb').onclick=()=>embSync();el('nbaixa').onclick=()=>gradeBaixa(true);
   const pb=el('npub');if(pb)pb.onclick=gradePublica;
   el('nsair').onclick=()=>{sbLogout();nuvemDraw();nuvem('Sessão encerrada neste aparelho.')}}
  else{
@@ -873,7 +904,7 @@ function nuvemDraw(){
    const em=el('nmail').value.trim(),se=el('nsenha').value;
    if(!em||!se){nuvem('Informe e-mail e senha.',1);return}
    nuvem('Entrando…');
-   try{await sbLogin(em,se);nuvemDraw();nuvem('✓ Conectado como '+esc(SESS.email));gradeBaixa(false);sincroniza(true)}
+   try{await sbLogin(em,se);nuvemDraw();nuvem('✓ Conectado como '+esc(SESS.email));gradeBaixa(false);sincroniza(true);embSync(true)}
    catch(e){nuvem(esc(e.message),1)}};
   el('nsenha').onkeydown=e=>{if(e.key==='Enter')el('nentra').onclick()}}}
 function aba(n){['conf','vend','grade','aj'].forEach(k=>{$('#v-'+k).classList.toggle('on',k===n);$('#t-'+k).classList.toggle('on',k===n)});$('#sub').textContent={conf:'Recebe',vend:'Modo Blecaute',grade:'Grade do ERP',aj:'Ajustes'}[n]||'';try{window.scrollTo(0,0)}catch(e){}}
@@ -918,7 +949,7 @@ $('#bgbaixa').onclick=()=>{aba('aj');gradeBaixa(true)};
 $('#bfg').onclick=()=>{$('#gmsg').className='hint';$('#gmsg').textContent='Escolha o arquivo da Grade no seletor…';$('#fg').click()};$('#bfi').onclick=()=>$('#fi').click();$('#bfi2').onclick=()=>$('#fi2').click();
 $('#bxml').onclick=buscaXml;$('#bck').onclick=copiaChave;
 params();draw();vdraw();nuvemDraw();aba(G?'conf':'grade');
-if(logado())setTimeout(()=>{gradeBaixa(false);sincroniza(true)},800);
+if(logado())setTimeout(()=>{gradeBaixa(false);sincroniza(true);embSync(true)},800);
 </script>
 </body>
 </html>

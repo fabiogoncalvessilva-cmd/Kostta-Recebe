@@ -1,5 +1,5 @@
 // Kostta Recebe - cache para abrir mesmo sem sinal. Rede primeiro: quando houver internet, pega sempre a versão mais nova.
-const V = 'kostta-v8';
+const V = 'kostta-v9';
 const BASE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(BASE)).then(() => self.skipWaiting())); });
 self.addEventListener('message', e => { if (e.data === 'skip') self.skipWaiting(); });
