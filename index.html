@@ -106,6 +106,31 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 .ta{width:100%;margin-top:6px;padding:9px;border:1px solid var(--bd);border-radius:11px;background:var(--bg);color:var(--tx);font:12.5px/1.45 Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;resize:vertical}
 .meta select{height:28px;padding:0 6px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
 #res>p.hint{text-align:center;padding:8px 0}
+.pitem{border-top:1px solid var(--bd);padding:10px 0}
+.prow{display:grid;grid-template-columns:56px minmax(0,1fr) 84px 20px;gap:7px;align-items:center}
+.prow .pd{font-size:13.5px;font-weight:650;line-height:1.25;overflow-wrap:anywhere}
+.pq,.pp{height:32px;padding:0 6px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit;font-size:13px;text-align:center;width:100%}
+.pg2{margin-top:6px;font-size:12px;color:var(--mut);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.pg div{background:var(--soft);border-radius:9px;padding:5px 8px}
+.pg small{display:block;color:var(--mut);font-size:10px}
+.pg b{font-size:13.5px;font-weight:800}
+.phead,.pedr{display:grid;grid-template-columns:62px minmax(0,1fr) 34px 78px;gap:6px 8px;align-items:center}
+.phead{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding:0 2px 4px}
+.phead span:nth-child(3),.phead span:nth-child(4){text-align:right}
+.pedr{border-top:1px solid var(--bd);padding:8px 2px;font-size:13px}
+.pedr .pdt{color:var(--mut);font-size:11.5px}
+.pedr .pfn{font-weight:650;overflow-wrap:anywhere}
+.pedr .pit,.pedr .pvl{text-align:right;font-weight:700}
+.pedr .pst,.pedr .pac{grid-column:1/-1}
+.pedr .pac{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.aviso{background:var(--warnb);color:var(--warn);border:1px solid rgba(138,82,0,.25);border-radius:12px;padding:10px 12px;margin:12px 0 0;font-size:12.5px;line-height:1.45}
+.pconf{display:flex;align-items:center;gap:9px;margin:10px 0 0;font-weight:650;font-size:13.5px;color:var(--warn)}
+.pconf input{width:20px;height:20px;accent-color:var(--pri)}
+.pbusca{margin-top:8px;padding:8px;background:var(--soft);border-radius:10px}
+.pbr{width:100%;display:block;margin:5px 0;text-align:left}
+.pbr.on{background:var(--pri);color:var(--prit);border-color:var(--pri)}
+.pbi{width:100%;height:36px;padding:0 10px;border:1px solid var(--bd);border-radius:9px;background:var(--card);color:var(--tx);font:inherit;font-size:13.5px}
 .vhead,.vrow{display:grid;grid-template-columns:20px minmax(0,1fr) 56px auto 20px;gap:7px;align-items:center}
 .vhead{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding:0 2px 6px}
 .vhead span:nth-child(3){text-align:center}.vhead span:nth-child(4){text-align:right}
@@ -123,8 +148,8 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 .errbar,#errbar{position:fixed;top:0;left:0;right:0;z-index:99;background:#b3261e;color:#fff;padding:10px 12px;font:600 12.5px/1.35 system-ui,sans-serif}
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);background:color-mix(in srgb,var(--card) 92%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px)}
 .tabs .in{max-width:560px;margin:0 auto;display:flex}
-.tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 4px 6px;border:0;background:transparent;color:var(--mut);font:inherit;font-size:11px;font-weight:700;cursor:pointer}
-.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tabs button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px 6px;border:0;background:transparent;color:var(--mut);font:inherit;font-size:10.5px;font-weight:700;cursor:pointer;min-width:0}
+.tabs button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .tabs button.on{color:var(--pri)}
 .movel .only-pc{display:none!important}
 .movel:not(.hosp) .gload{display:none!important}
@@ -169,6 +194,38 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
   <p id="vhmsg" class="hint"></p>
 </section>
 </div>
+<div class="view" id="v-ped">
+<section class="box">
+  <b class="t">Pedidos · compra para reposição</b>
+  <label class="kl">Fornecedor<input id="pforn" autocomplete="off" placeholder="Nome do fornecedor ou do vendedor"></label>
+  <div class="seg" style="margin-top:12px"><button class="chip on" id="pm-manual">1 · Manual</button><button class="chip" id="pm-csv">2 · Planilha</button><button class="chip" id="pm-import">3 · PDF/texto</button></div>
+  <div id="pp-manual">
+    <div class="btns"><button class="btn pri" id="pcod">Ler código de barras</button></div>
+    <input id="pfc" type="file" accept="image/*" capture="environment" hidden>
+    <label class="kl">Buscar na Grade por nome ou código<input id="pbm" autocomplete="off" placeholder="Ex.: trident melancia ou 7622300847760"></label>
+    <div id="pres"></div>
+  </div>
+  <div id="pp-csv" hidden>
+    <p class="hint">Jeito mais seguro de importar: peça ao vendedor o pedido em <b>Excel ou CSV</b> e salve como CSV. O arquivo deve ter uma linha por produto, com colunas de descrição, quantidade e preço (código de barras e código interno são bem-vindos).</p>
+    <div class="btns"><button class="btn pri" id="pcsvb">Escolher planilha (CSV)</button></div>
+    <input id="pfcsv" type="file" accept=".csv,.txt,text/csv" hidden>
+  </div>
+  <div id="pp-import" hidden>
+    <div class="aviso"><b>Atenção:</b> esta leitura é uma tentativa. Cada PDF tem um layout, e o app pode trocar preços, quantidades ou produtos. <b>Confira item a item antes de salvar.</b> Prefira os modos Manual ou Planilha.</div>
+    <label class="kl">Cole a conversa ou a lista de itens<textarea id="ptxt" class="ta" rows="5" placeholder="Um produto por linha. Ex.: 10 cx Arroz Parbo Copagro 1kg 28,90"></textarea></label>
+    <div class="btns"><button class="btn pri" id="pana">Analisar texto</button><button class="btn" id="ppdf">Ler PDF</button><button class="btn" id="pfoto">Ler foto</button><button class="btn" id="pcop">Copiar texto para suporte</button></div>
+    <input id="pfp" type="file" accept="application/pdf,.pdf" hidden><input id="pfi" type="file" accept="image/*" hidden>
+  </div>
+  <p id="pmsg" class="hint"></p>
+</section>
+<section class="box">
+  <div id="pavis"></div>
+  <div id="ptot"></div>
+  <div class="btns" id="pbtn" hidden><button class="btn pri" id="psalva">Salvar pedido</button><button class="btn" id="pesp">Espelho</button><button class="btn" id="pcsv">Exportar CSV</button><button class="btn" id="pzera">Limpar itens</button></div>
+  <div id="phist"></div>
+  <div id="plista"></div>
+</section>
+</div>
 <div class="view" id="v-grade">
 <section class="box">
   <div class="row"><b class="t">Grade do ERP</b><span id="gb" class="pill">Carregando…</span></div>
@@ -202,8 +259,10 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 </div>
 </main>
 <nav class="tabs"><div class="in">
+  <button id="t-ped" data-tab="ped"><svg viewBox="0 0 24 24"><path d="M8 4h9a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7"/><path d="M9 9h7M9 13h7M9 17h4"/><path d="M5 4h3v3"/></svg>Pedidos</button>
   <button class="on" id="t-conf" data-tab="conf"><svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>Conferir</button>
   <button id="t-vend" data-tab="vend"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 10.3a2 2 0 0 0 2 1.7h6.9a2 2 0 0 0 2-1.6L20 7H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>Vendas</button>
+
   <button id="t-grade" data-tab="grade"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>Grade</button>
   <button id="t-aj" data-tab="aj"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Ajustes</button>
 </div></nav>
@@ -233,7 +292,7 @@ function buildIdx(rows){idx=new Map();byCod=new Map();for(const r of rows){const
 const MOVEL=!!(/Android|iPhone|iPad|iPod|Mobile|Silk/i.test(navigator.userAgent||'')||((window.matchMedia&&matchMedia('(pointer:coarse)').matches)&&innerWidth<820));
 document.documentElement.classList.toggle('movel',MOVEL);
 const HOSP=/^https?:/.test(location.protocol);document.documentElement.classList.toggle('hosp',HOSP);
-const VER='2026.11.06b';
+const VER='2026.11.10';
 let DG=['v'+VER,'JavaScript ativo'];
 {let ls='ok';try{localStorage.setItem('_k','1');localStorage.removeItem('_k')}catch(e){ls='bloqueado'}DG.push('armazenamento '+ls)}
 try{const pk=document.getElementById('pacote');
@@ -249,7 +308,8 @@ function diag(){const e=$('#dg');if(e)e.textContent=(!G||DG.some(x=>/erro/.test(
 if(G)buildIdx(G.rows);
 
 function parseCSV(t){
- const l1=t.split(/\r?\n/).slice(0,30).find(l=>H(l).includes('BARRA')&&H(l).includes('CODIGO'))||'';
+ const LS0=t.split(/\r?\n/).filter(l=>l.trim());
+ const l1=LS0.slice(0,30).find(l=>H(l).includes('BARRA')&&H(l).includes('CODIGO'))||LS0[0]||'';
  const cn=c=>l1.split(c).length;
  const d=cn('\t')>=cn(';')&&cn('\t')>=cn(',')?'\t':(cn(';')>=cn(',')?';':',');
  const rows=[];let row=[],f='',q=false;
@@ -431,6 +491,19 @@ function cands(it){
 function busca(q){q=H(q);if(!q)return[];const out=[],dig=/^\d+$/.test(q),tk=q.split(/\s+/);
  for(const r of byCod.values()){if(dig?(r[1]===q||nz(r[0])===nz(q)):tk.every(t=>H(r[2]).includes(t))){out.push(r);if(out.length>=6)break}}
  return out}
+const PARAR=new Set(['de','da','do','das','dos','com','sem','para','e','a','o','em','un','und','unid','cx','fd','pct','kg','g','ml','l','lt']);
+function toks(s){return H(s).replace(/[^A-Z0-9ÇÃÕÁÉÍÓÚÂÊÔÀ ]/gi,' ').split(/\s+/).filter(t=>t.length>1&&!PARAR.has(t.toLowerCase()))}
+function buscaNome(q,lim){
+ const T=toks(q);if(!T.length)return [];
+ const out=[];
+ for(const r of byCod.values()){
+  const d=H(r[2]);let p=0,bate=0;
+  for(const t of T){const i=d.indexOf(t);if(i>=0){bate++;p+=t.length+(i===0?3:0)}else if(/^\d+$/.test(t)===false&&t.length>4&&d.indexOf(t.slice(0,Math.max(4,t.length-2)))>=0){bate+=0.5;p+=2}}
+  if(bate<Math.max(1,Math.ceil(T.length*0.6)))continue;
+  p+=bate*6-Math.min(10,Math.abs(d.length-H(q).length)/6);
+  out.push([p,r])}
+ out.sort((a,b)=>b[0]-a[0]);
+ return out.slice(0,lim||6).map(x=>x[1])}
 function analisa(it){
  const ek0=nz(it.cT)||nz(it.cE),dir=[nz(it.cT),nz(it.cE)];
  let r=null,how='';
@@ -896,7 +969,7 @@ function nuvemDraw(){
  const el=id=>$('#'+id);
  if(logado()){
   el('napar').onchange=e=>{APAR=e.target.value.trim().slice(0,40);LS.set('aparelho',APAR);nuvemDraw();nuvem('Nome do aparelho salvo.')};
-  el('nsinc').onclick=()=>sincroniza();el('nemb').onclick=()=>embSync();el('nbaixa').onclick=()=>gradeBaixa(true);
+  el('nsinc').onclick=()=>{sincroniza();pdSinc(true)};el('nemb').onclick=()=>embSync();el('nbaixa').onclick=()=>gradeBaixa(true);
   const pb=el('npub');if(pb)pb.onclick=gradePublica;
   el('nsair').onclick=()=>{sbLogout();nuvemDraw();nuvem('Sessão encerrada neste aparelho.')}}
  else{
@@ -907,7 +980,289 @@ function nuvemDraw(){
    try{await sbLogin(em,se);nuvemDraw();nuvem('✓ Conectado como '+esc(SESS.email));gradeBaixa(false);sincroniza(true);embSync(true)}
    catch(e){nuvem(esc(e.message),1)}};
   el('nsenha').onkeydown=e=>{if(e.key==='Enter')el('nentra').onclick()}}}
-function aba(n){['conf','vend','grade','aj'].forEach(k=>{$('#v-'+k).classList.toggle('on',k===n);$('#t-'+k).classList.toggle('on',k===n)});$('#sub').textContent={conf:'Recebe',vend:'Modo Blecaute',grade:'Grade do ERP',aj:'Ajustes'}[n]||'';try{window.scrollTo(0,0)}catch(e){}}
+let PD=LS.get('pedido',{forn:'',itens:[]}), PED=LS.get('pedidos',[]), PEDAS=LS.get('pedas',{}), PBQ={};
+const nfmt=x=>String(Math.round(x*1000)/1000).replace('.',',');
+function pdsalva(){LS.set('pedido',PD)}
+function pmsg(t,e){const m=$('#pmsg');if(m){m.className=e?'hint err':'hint';m.innerHTML=t||''}}
+function limpaLinha(l){
+ return String(l||'')
+  .replace(/^\s*[\[(]?\d{1,2}\/\d{1,2}(\/\d{2,4})?[,\s]+\d{1,2}:\d{2}(:\d{2})?\s*(AM|PM)?[\])]?\s*[-–]?\s*/i,'')
+  .replace(/^\s*[^:,\d]{2,40}:\s*/,'')
+  .replace(/^[\s\-–•*>#.)\]]+/,'').trim()}
+const UNS=['CX','PC','PÇ','DP','UN','UND','FD','DZ','PT','KG','SC','CJ','PCT','FR','GL','LT','BD','BJ','RL','SH'];
+const CAB=/^(REDS|TELEFONE|FONE|DADOS|CLIENTE|ENDERE|CIDADE|UF:|BAIRRO|SEQ|VALOR|TOTAL|PEDIDO|EMISS|CNPJ|CPF|CEP|NRO|RUA |AV |AVENIDA|DESCRI|OBS|VENDEDOR|REPRESENT|PRAZO|CONDI|COND\.|VENCIMENTO|NCM|UND|QTD|VLR|ITEM|FORM|FRETE|TRANSPORT|ORÇAMENTO|ORCAMENTO|DATA|IMPRESSO|PRODUTO|FANTASIA|IE\/|EMAIL|MARCA|EMB|CÓD|COD\.|C[ÓO]D\b|TROCA)/i;
+function numTok(t){
+ if(!/^-?[\d.,]+$/.test(t)||!/\d/.test(t))return null;
+ const v=num(t);return isFinite(v)?v:null}
+// Lê uma linha de tabela de pedido achando a conta quantidade x valor unitário = total
+function repetida(s){
+ const tt=String(s||'').split(/\s+/).filter(x=>x.replace(/[^A-Za-zÀ-ÿ]/g,'').length>2),c={};
+ for(const x of tt){const k=x.toUpperCase();c[k]=(c[k]||0)+1;if(c[k]>=3)return true}
+ return false}
+function leLinhaTabela(l){
+ const tk=l.trim().split(/\s+/);
+ if(tk.length<4)return null;
+ if(repetida(l))return null;
+ let ean='';
+ const N=[];
+ tk.forEach((t,i)=>{
+  const d=t.replace(/\D/g,'');
+  if(/^\d[\d-]{10,}$/.test(t)&&d.length>=12){if(!ean)ean=d.slice(0,13);return}
+  const v=numTok(t);if(v!==null)N.push({i,v})});
+ let melhor=null;
+ for(let a=0;a<N.length;a++)for(let b=a+1;b<N.length;b++)for(let c=a+1;c<N.length;c++){
+  if(c===b)continue;
+  const q=N[a].v,pu=N[b].v,t=N[c].v;
+  if(q<=0||pu<=0||t<=0||q>99999||pu>99999)continue;
+  if(t<pu-0.01)continue;
+  if(Math.abs(q*pu-t)>Math.max(0.03,t*0.012))continue;
+  const pt={q,pu,t,ia:N[a].i,ib:N[b].i,ic:N[c].i};
+  if(!melhor||pt.t>melhor.t+0.001||(Math.abs(pt.t-melhor.t)<0.002&&pt.ic>melhor.ic))melhor=pt}
+ if(!melhor)return null;
+ const un=(tk.slice(0,melhor.ib).reverse().find(t=>UNS.includes(t.toUpperCase().replace(/[.,]/g,'')))||'').toUpperCase().replace(/[.,]/g,'');
+ let ini=0;
+ while(ini<tk.length&&(/^\d{1,4}$/.test(tk[ini])||/^\d{3,9}-?\d?$/.test(tk[ini])))ini++;
+ let desc=tk.slice(ini,Math.min(melhor.ia,melhor.ib,melhor.ic,tk.length)).filter(t=>{
+  const u=t.toUpperCase().replace(/[.,]/g,'');
+  return !UNS.includes(u)&&!/^(FRAC|COM|CX|MUFFATAO)$/i.test(t)&&!/^-?[\d.,]+$/.test(t)&&!/^\d[\d-]{10,}$/.test(t)}).join(' ').trim();
+ desc=desc.replace(/\s{2,}/g,' ');
+ if(desc&&CAB.test(desc))return null;
+ if(desc.replace(/[^A-Za-zÀ-ÿ]/g,'').length<3)desc='';
+ return {desc,ean,un,q:melhor.q,pc:melhor.pu}}
+function soTexto(l){
+ const t=String(l||'').trim();
+ if(!t||t.length>70||CAB.test(t)||repetida(t))return false;
+ if(!/[A-Za-zÀ-ÿ]/.test(t))return false;
+ const letras=(t.match(/[A-Za-zÀ-ÿ]/g)||[]).length,dig=(t.match(/\d/g)||[]).length;
+ return letras>=2&&dig<=letras}
+function parseTabela(txt){
+ const L=String(txt||'').split(/\r?\n/),it=L.map(l=>leLinhaTabela(l)),usada=L.map(()=>false),out=[];
+ for(let i=0;i<L.length;i++){
+  const x=it[i];if(!x)continue;
+  const curto=x.desc.replace(/[^A-Za-zÀ-ÿ]/g,'').length<3;
+  if(curto){
+   let j=-1;
+   if(i>0&&!it[i-1]&&!usada[i-1]&&soTexto(L[i-1]))j=i-1;
+   else if(i+1<L.length&&!it[i+1]&&!usada[i+1]&&soTexto(L[i+1]))j=i+1;
+   if(j<0)continue;
+   x.desc=(L[j].trim()+' '+x.desc).trim();usada[j]=true}
+  // junta a continuação da descrição (linha seguinte curta, sem números de tabela)
+  const k=i+1;
+  if(k<L.length&&!it[k]&&!usada[k]&&soTexto(L[k])&&L[k].trim().length<46){x.desc+=' '+L[k].trim();usada[k]=true}
+  x.desc=x.desc.replace(/\s{2,}/g,' ').trim();
+  if(repetida(x.desc))continue;
+  if(x.desc.replace(/[^A-Za-zÀ-ÿ]/g,'').length<3)continue;
+  out.push(x)}
+ return out}
+function parsePedido(txt){
+ const tab=parseTabela(txt);if(tab.length>=3)return tab;
+ const out=[],ruido=/(mensagem apagada|áudio|audio omitido|imagem omitida|figurinha|https?:\/\/|bom dia|boa tarde|boa noite|obrigad|segue o pedido|pedido abaixo)/i;
+ for(let bruta of String(txt||'').split(/\r?\n/)){
+  const l=limpaLinha(bruta);
+  if(l.length<4||ruido.test(l)||CAB.test(l))continue;
+  if(/^\(?\d{2}\)?[\s-]?\d{4,5}[-\s]?\d{4}/.test(l)||/\b\d{8}-?\d{3}\b/.test(l))continue;
+  if(/\b\d{11,14}\b/.test(l)&&!/\d+[.,]\d{2}\b/.test(l))continue;
+  if(/LTDA|S\/A|S\.A|ME\b|EPP\b/i.test(l)&&!/\d+[.,]\d{2}\b/.test(l))continue;
+  if(!/[a-zA-ZÀ-ÿ]{3}/.test(l))continue;
+  let q=1,pc=0,d=l;
+  const mp=[...d.matchAll(/(?:r\$\s*)?(\d{1,3}(?:\.\d{3})+,\d{2}|\d+,\d{1,2}|\d+\.\d{2})(?!\s*(kg|g|ml|l|un)\b)/gi)];
+  if(mp.length){const u=mp[mp.length-1];pc=num(u[1]);d=d.slice(0,u.index)+' '+d.slice(u.index+u[0].length)}
+  let mq=d.match(/^\s*(\d{1,4}(?:[.,]\d{1,3})?)\s*(x|un|und|unid|unidades|cx|caixas?|fd|fardos?|pct|pacotes?|dz|kg)?\b[\s\-–x]*/i);
+  if(mq&&(mq[2]||/^\s*\d{1,4}\s+[a-zA-ZÀ-ÿ]/.test(d))){q=num(mq[1])||1;d=d.slice(mq[0].length)}
+  else{mq=d.match(/\b(\d{1,4})\s*(x|un|und|unid|cx|fd|pct)\b/i);if(mq){q=num(mq[1])||1;d=d.replace(mq[0],' ')}}
+  d=d.replace(/\b(r\$|reais|cada|a unidade|un\.?)\b/gi,' ').replace(/[\s\-–|•]{2,}/g,' ').replace(/\s+/g,' ').trim();
+  if(d.length<3)continue;
+  out.push({desc:d,q:q||1,pc:pc||0});
+ }
+ return out}
+function pdEmb(it){
+ if(it.emb>0)return it.emb;
+ if(/^(UN|UND|KG|PC|PÇ)$/i.test(it.un||''))return 1;
+ const m=String(it.desc||'').match(/\bC\s*\/\s*(\d{1,3})\b/i);
+ if(m&&+m[1]>1)return +m[1];
+ const f=fatDesc(it.desc);
+ return f>1?f:1}
+function pdUnit(it){const e=pdEmb(it);return e>1?it.pc/e:it.pc}
+function pdCusto(r){return r?(r[6]>0?r[6]:r[4]||0):0}
+function pdLiga(it){
+ const k=H(it.desc);
+ if(it.ean){for(const c of cands({cT:it.ean,cE:it.ean})){if(idx.has(c)){it.cod=idx.get(c)[1];it.conf=true;return}}}
+ if(PEDAS[k]&&byCod.has(PEDAS[k])){it.cod=PEDAS[k];it.conf=true;return}
+ const r=buscaNome(it.desc,1)[0];
+ if(r){it.cod=r[1];it.conf=false}}
+function pdAnalisa(){
+ const t=$('#ptxt').value;
+ if(!t.trim()){pmsg('Cole o pedido, ou use Ler PDF ou Ler foto.',1);return}
+ if(!idx.size){pmsg('Carregue a Grade antes de analisar o pedido.',1);return}
+ const tab=parseTabela(t),L=tab.length>=3?tab:parsePedido(t);
+ if(!L.length){pmsg('Não reconheci nenhum item. Confira se cada produto está em uma linha.',1);return}
+ if(PD.itens.length&&!confirm('Substituir os '+PD.itens.length+' itens atuais pelos '+L.length+' deste arquivo?'))return;
+ PD.itens=[];PBQ={};
+ L.forEach(pdLiga);
+ PD.itens=L;PD.origem='import';PD.ok=false;pdsalva();pddraw();
+ $('#ptxt').value='';
+ pmsg('✓ '+L.length+(L.length===1?' item lido':' itens lidos')+(tab.length>=3?' (tabela de pedido reconhecida)':'')+'. Confira o produto associado e o preço de cada linha.')}
+function montaLinhas(its){
+ const L={};
+ for(const s of its){if(!s.t||!s.t.trim())continue;const k=Math.round(s.y*2)/2;(L[k]=L[k]||[]).push(s)}
+ return Object.keys(L).map(Number).sort((a,b)=>b-a)
+  .map(k=>L[k].sort((a,b)=>a.x-b.x).map(s=>s.t).join(' ').replace(/\s+/g,' ').trim())
+  .filter(l=>l).join('\n')}
+async function pdCSVin(f){
+ pmsg('Lendo a planilha…');
+ try{
+  const txt=dec(await f.arrayBuffer()).replace(/^\uFEFF/,'');
+  const rows=parseCSV(txt).filter(r=>r.some(c=>String(c||'').trim()));
+  if(rows.length<2)throw new Error('a planilha está vazia');
+  const hd=rows[0].map(H),ix=(...n)=>hd.findIndex(x=>n.some(k=>x.includes(k)));
+  let id=ix('DESCRI','PRODUTO','ITEM'),iq=ix('QTD','QUANT'),ip=ix('PRECO','PREÇO','VALOR','CUSTO','UNIT'),
+      ie=ix('BARRA','EAN','GTIN'),ic=ix('CODIGO','CÓDIGO','COD'),iu=ix('EMB','UNID','UN');
+  let ini=1;
+  if(id<0&&iq<0&&ip<0){id=0;iq=1;ip=2;ini=0}
+  if(id<0)throw new Error('não encontrei a coluna da descrição');
+  const L=[];
+  for(const r of rows.slice(ini)){
+   const d=String(r[id]||'').trim();if(!d||/^(total|subtotal)/i.test(d))continue;
+   const q=iq>=0?num(r[iq]):1,pc=ip>=0?num(r[ip]):0;
+   if(!/[A-Za-zÀ-ÿ]{3}/.test(d))continue;
+   L.push({desc:d,q:q>0?q:1,pc:pc>0?pc:0,ean:ie>=0?String(r[ie]||'').replace(/\D/g,''):'',un:iu>=0?String(r[iu]||'').trim().toUpperCase():'',codf:ic>=0?String(r[ic]||'').trim():''})}
+  if(!L.length)throw new Error('nenhuma linha de produto');
+  if(PD.itens.length&&!confirm('Substituir os '+PD.itens.length+' itens atuais pelos '+L.length+' da planilha?'))return;
+  L.forEach(pdLiga);PD.itens=L;PD.origem='csv';PD.ok=false;PBQ={};pdsalva();pddraw();
+  pmsg('✓ '+L.length+' itens lidos da planilha. Confira as associações e os preços.')}
+ catch(e){pmsg('Não foi possível ler a planilha ('+esc(e.message)+'). Ela precisa estar em CSV, com uma linha por produto.',1)}}
+async function pdPDF(f){
+ pmsg('Lendo o PDF…');
+ try{
+  if(!window.pdfjsLib){await new Promise((ok,er)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.min.mjs';s.type='module';s.onload=ok;s.onerror=()=>er(new Error('sem internet para baixar o leitor de PDF'));document.head.appendChild(s)});
+   await new Promise(r=>setTimeout(r,300))}
+  const lib=window.pdfjsLib;if(!lib)throw new Error('leitor de PDF não carregou');
+  lib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.min.mjs';
+  const doc=await lib.getDocument({data:new Uint8Array(await f.arrayBuffer())}).promise;
+  let txt='';
+  for(let i=1;i<=doc.numPages;i++){const pg=await doc.getPage(i),c=await pg.getTextContent();
+   txt+=montaLinhas(c.items.map(s=>({x:s.transform[4],y:s.transform[5],t:s.str})))+'\n'}
+  $('#ptxt').value=txt.trim();pmsg('PDF lido. Toque em Analisar.')}
+ catch(e){pmsg('Não foi possível ler o PDF ('+esc(e.message)+'). Copie o texto e cole no campo.',1)}}
+async function pdFoto(f){
+ pmsg('Lendo a imagem… pode levar alguns segundos.');
+ try{
+  const im=await carregaImg(f),T=await carregaOCR();
+  const r=await T.recognize(imgCanvas(im,2000),'por+eng');
+  const t=((r&&r.data&&r.data.text)||'').trim();
+  if(!t)throw new Error('nada reconhecido');
+  $('#ptxt').value=t;pmsg('Imagem lida. Confira o texto e toque em Analisar.')}
+ catch(e){pmsg('Não foi possível ler a imagem ('+esc(e.message)+'). Digite os itens no campo.',1)}}
+let PMODO=LS.get('pmodo','manual'),PBM='',PSEL=0,PRS=[];
+function pdModo(m,quieto){
+ if(!quieto&&m!==PMODO&&PD.itens.length){
+  if(!confirm('Trocar de modo apaga os '+PD.itens.length+' itens em edição. Continuar?'))return;
+  PD.itens=[];PBQ={};pdsalva();pddraw()}
+ PMODO=m;LS.set('pmodo',PMODO);
+ ['manual','csv','import'].forEach(k=>{$('#pm-'+k).classList.toggle('on',k===PMODO);$('#pp-'+k).hidden=k!==PMODO});
+ pddraw();pmsg('')}
+function pdAdd(r,q,pc){
+ if(!PD.itens.length)PD.origem='manual';
+ PD.itens.unshift({desc:r[2],q:q||1,pc:pc||0,cod:r[1],ean:r[0],conf:true});pdsalva();pddraw();
+ pmsg('✓ Adicionado: <b>'+esc(r[2])+'</b>. Informe a quantidade e o custo negociado.')}
+function pdBuscaDraw(){
+ const el=$('#pres');if(!el)return;
+ const q=PBM.trim();
+ if(!q){el.innerHTML='';return}
+ if(!idx.size){el.innerHTML='<p class="hint err">Carregue a Grade primeiro.</p>';return}
+ let rs=[];const d=q.replace(/\D/g,'');
+ if(d.length>=3){for(const c of cands({cT:d,cE:d})){if(idx.has(c)){rs=[idx.get(c)];break}}
+  if(!rs.length&&byCod.has(d))rs=[byCod.get(d)]}
+ if(!rs.length)rs=buscaNome(q,8);
+ PRS=rs;if(PSEL>=rs.length)PSEL=0;
+ el.innerHTML=rs.length?rs.map((x,i)=>'<button class="chip pbr'+(i===PSEL?' on':'')+'" data-pa="'+esc(x[1])+'">'+esc(x[1])+' · '+esc(x[2])+' · '+R(x[3])+'</button>').join('')+(rs.length>1?'<p class="hint">↑ ↓ para escolher · Enter para adicionar</p>':''):'<p class="hint">Nada encontrado na Grade.</p>'}
+async function pdCodigo(f){
+ pmsg('Lendo o código…');
+ try{
+  const im=await carregaImg(f);let txt=null;
+  if(window.BarcodeDetector){try{const bd=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128','itf','code_39']}),r=await bd.detect(await createImageBitmap(im));if(r.length)txt=r[0].rawValue}catch(e){}}
+  if(!txt){const Z=await carregaZX();for(const mx of [1600,1000]){txt=zxDecode(imgData(im,mx),Z,FMP);if(txt)break}}
+  if(!txt){pmsg('Não consegui ler o código. Aproxime e melhore a luz.',1);return}
+  const d=String(txt).replace(/\D/g,'');
+  for(const c of cands({cT:d,cE:d})){if(idx.has(c)){pdAdd(idx.get(c));return}}
+  PBM=d;$('#pbm').value=d;pdBuscaDraw();pmsg('Código '+esc(d)+' não está na Grade. Procure pelo nome.',1)}
+ catch(e){pmsg('Não foi possível ler ('+esc(e.message)+').',1)}}
+function pdTotais(){let q=0,v=0,sem=0;PD.itens.forEach(i=>{q+=i.q;v+=i.q*i.pc;if(!i.cod)sem++});return {n:PD.itens.length,q:Math.round(q*1000)/1000,v,sem}}
+function pddraw(){
+ const el=$('#plista');if(!el)return;
+ const T=pdTotais();
+ if(!PD.itens.length){el.innerHTML='<p class="hint">Nenhum item. Cole a conversa do WhatsApp, leia um PDF ou uma foto e toque em Analisar.</p>';$('#pbtn').hidden=true}
+ else{
+  el.innerHTML=PD.itens.map((it,i)=>{
+   const r=it.cod?byCod.get(it.cod):null,ce=pdCusto(r),emb=pdEmb(it),cu=pdUnit(it),dv=(ce>0&&cu>0)?cu/ce-1:null,
+    lucro=(r&&r[3]>0&&cu>0)?(1-cu/r[3])*100:null;
+   let h='<div class="pitem"><div class="prow"><input class="pq" inputmode="decimal" data-pq="'+i+'" value="'+nfmt(it.q)+'"><b class="pd">'+esc(it.desc)+(it.un?' <span style="font-weight:600;color:var(--mut)">'+esc(it.un)+'</span>':'')+'</b><input class="pp" inputmode="decimal" data-pp="'+i+'" value="'+(it.pc?it.pc.toFixed(2).replace('.',','):'')+'" placeholder="custo"><button class="vx" data-pr="'+i+'">✕</button></div>';
+   h+=r?'<div class="pg2"><span class="badge '+(it.conf?'c-ok':'c-warn')+'">'+(it.conf?'confirmado':'sugerido')+'</span> <b>'+esc(r[1])+'</b> · '+esc(r[2])+' <button class="chip" data-pt="'+i+'">trocar</button></div>'
+          :'<div class="pg2"><span class="badge c-info">sem produto</span> <button class="chip" data-pt="'+i+'">procurar na Grade</button></div>';
+   h+='<div class="emb"><label>Un. por embalagem <input data-pe2="'+i+'" inputmode="numeric" value="'+emb+'"></label>'+(emb>1?' <small>custo unitário <b>'+R(cu)+'</b></small>':'')+'</div>';
+   if(r)h+='<div class="pg"><div><small>Custo ERP</small><b>'+(ce?R(ce):'—')+'</b></div><div><small>Variação</small><b class="'+(dv==null?'':dv>0.001?'r-aj':dv<-0.001?'r-ok':'')+'">'+(dv==null?'—':(dv>0?'▲ +':'▼ −')+(Math.abs(dv)*100).toFixed(1).replace('.',',')+'%')+'</b></div><div><small>Preço atual</small><b>'+(r[3]?R(r[3]):'—')+'</b></div><div><small>Lucro se comprar</small><b class="'+(lucro==null?'':lucro<P.min?'r-aj':lucro>P.max?'r-at':'r-ok')+'">'+(lucro==null?'—':lucro.toFixed(1).replace('.',',')+'%')+'</b></div></div>';
+   if(PBQ[i]!=null){const rs=buscaNome(PBQ[i]||it.desc,6);
+    h+='<div class="pbusca"><input class="pbi" data-pb="'+i+'" value="'+esc(PBQ[i]||it.desc)+'" placeholder="nome ou código do produto">'
+     +(rs.length?rs.map(x=>'<button class="chip" style="display:block;margin:5px 0;text-align:left" data-pc="'+i+'#'+esc(x[1])+'">'+esc(x[1])+' · '+esc(x[2])+' · '+R(x[3])+'</button>').join(''):'<p class="hint">Nada encontrado.</p>')+'</div>'}
+   return h+'</div>'}).join('');
+  $('#pbtn').hidden=false}
+ const av=$('#pavis');
+ if(av)av.innerHTML=(PD.itens.length&&PD.origem==='import')
+  ?'<div class="aviso">Itens vindos de PDF ou texto: confira descrição, quantidade e preço de cada linha.</div><label class="pconf"><input type="checkbox" data-pok="1"'+(PD.ok?' checked':'')+'> Conferi todos os itens</label>'
+  :(PD.itens.length&&PD.origem==='csv'?'<p class="hint">Itens vindos de planilha. Confira as associações antes de salvar.</p>':'');
+ $('#ptot').innerHTML=PD.itens.length?'<div class="tot"><div><small>Itens</small><b>'+T.n+'</b></div><div><small>Quantidade</small><b>'+nfmt(T.q)+'</b></div><div class="big"><small>Total do pedido</small><b>'+R(T.v)+'</b></div></div>'+(T.sem?'<p class="hint err">'+T.sem+(T.sem===1?' item sem produto associado.':' itens sem produto associado.')+'</p>':''):'';
+ const hs=$('#phist');if(!hs)return;
+ if(!PED.length){hs.innerHTML='<p class="hint">Nenhum pedido salvo ainda.</p>';return}
+ const ST2={aberto:['Aberto','c-info'],conf:['Em conferência','c-warn'],recebido:['Recebido','c-ok']};
+ const cnt={aberto:0,conf:0,recebido:0};PED.forEach(x=>cnt[x.status||'aberto']++);
+ hs.innerHTML='<div class="row" style="margin:14px 0 6px"><b class="t">Pedidos realizados</b><span class="hint" style="margin:0">'+cnt.aberto+' abertos · '+cnt.conf+' em conferência · '+cnt.recebido+' recebidos</span></div>'
+ +'<div class="phead"><span>Data</span><span>Fornecedor</span><span>Itens</span><span>Total</span><span></span></div>'
+ +PED.slice().reverse().map((x,k)=>{const i=PED.length-1-k,st=ST2[x.status||'aberto'];
+  return '<div class="pedr"><span class="pdt">'+hora(x.ts)+'</span><span class="pfn">'+esc(x.forn||'sem fornecedor')+'</span><span class="pit">'+x.itens.length+'</span><span class="pvl">'+R(x.total)+'</span>'
+   +'<span class="pst"><span class="badge '+st[1]+'">'+st[0]+'</span>'+(x.nuvem?'':' <span class="badge c-warn">a enviar</span>')+'</span>'
+   +'<span class="pac">'+((x.status||'aberto')==='aberto'?'<button class="chip" data-pconf="'+i+'">enviar para conferência</button>':'')
+   +(x.status==='conf'?'<button class="chip" data-pvolta="'+i+'">voltar para aberto</button>':'')
+   +'<button class="chip" data-pe="'+i+'">espelho</button><button class="vx" data-px="'+i+'">✕</button></span></div>'}).join('')}
+function pdEspelho(p){
+ const z=n=>String(n).padStart(2,'0'),d=new Date(p.ts);
+ return '*Kostta Loja · Espelho do pedido*\n'+esc(p.forn||'Fornecedor não informado')+'\n'+z(d.getDate())+'/'+z(d.getMonth()+1)+'/'+d.getFullYear()+' '+z(d.getHours())+':'+z(d.getMinutes())+'\n\n'
+  +p.itens.map(i=>'• '+nfmt(i.q)+' x '+(i.cod?i.cod+' · ':'')+i.desc+(i.pc?' · '+R(i.pc)+(i.emb>1?' (un '+R(i.pc/i.emb)+')':'')+' = '+R(i.q*i.pc):'')).join('\n')
+  +'\n\nItens: '+p.itens.length+'\n*TOTAL DO PEDIDO: '+R(p.total)+'*'}
+async function pdSalva(){
+ if(!PD.itens.length){pmsg('Nenhum item para salvar.',1);return}
+ if(PD.origem==='import'&&!PD.ok){pmsg('Este pedido veio de PDF ou texto. Marque <b>Conferi todos os itens</b> antes de salvar.',1);return}
+ const T=pdTotais(),p={ts:Date.now(),forn:PD.forn||'',itens:PD.itens.map(i=>({desc:i.desc,q:i.q,pc:i.pc,emb:pdEmb(i),cu:Math.round(pdUnit(i)*10000)/10000,cod:i.cod||'',ean:i.ean||'',un:i.un||'',conf:!!i.conf})),total:Math.round(T.v*100)/100,status:'aberto',nuvem:false};
+ PED.push(p);if(PED.length>200)PED=PED.slice(-200);LS.set('pedidos',PED);
+ PD.itens.forEach(i=>{if(i.cod&&i.conf){PEDAS[H(i.desc)]=i.cod}});LS.set('pedas',PEDAS);
+ PD={forn:PD.forn,itens:[],origem:'manual',ok:false};pdsalva();pddraw();
+ pmsg('✓ Pedido salvo com '+p.itens.length+' itens · '+R(p.total)+'.');
+ if(logado())pdEnvia(p).then(()=>pddraw()).catch(()=>{})}
+async function pdStatus(i,s){
+ const p=PED[i];if(!p)return;
+ p.status=s;LS.set('pedidos',PED);pddraw();
+ pmsg(s==='conf'?'✓ Pedido de <b>'+esc(p.forn||'sem fornecedor')+'</b> enviado para conferência. Ele fica aguardando a nota fiscal no recebimento.':'Pedido voltou para aberto.');
+ if(logado()&&p.id){try{await sb('/rest/v1/pedidos?id=eq.'+encodeURIComponent(p.id),{method:'PATCH',headers:{Prefer:'return=minimal'},body:{status:s}})}catch(e){}}}
+async function pdEnvia(p){
+ const r=await sb('/rest/v1/pedidos',{method:'POST',headers:{Prefer:'return=representation'},body:{fornecedor:p.forn||null,aparelho:APAR||'sem nome',total:p.total,itens:p.itens,status:p.status||'aberto',criado_em:iso(p.ts)}});
+ try{const d=await r.json();if(d&&d[0]&&d[0].id)p.id=d[0].id}catch(e){}
+ p.nuvem=true;LS.set('pedidos',PED);return true}
+async function pdSinc(silencioso){
+ if(!logado()){if(!silencioso)pmsg('Entre na nuvem (Ajustes) para enviar os pedidos.',1);return}
+ const pend=PED.filter(p=>!p.nuvem);if(!pend.length){if(!silencioso)pmsg('Nada pendente.');return}
+ let ok=0;for(const p of pend){try{await pdEnvia(p);ok++}catch(e){if(!silencioso)pmsg('Enviados '+ok+' de '+pend.length+'. Erro: '+esc(e.message),1);pddraw();return}}
+ pddraw();if(!silencioso)pmsg('✓ '+ok+(ok===1?' pedido enviado.':' pedidos enviados.'))}
+async function pdShare(i){
+ const p=PED[i]||{ts:Date.now(),forn:PD.forn,itens:PD.itens,total:pdTotais().v},t=pdEspelho(p);
+ try{if(navigator.share){await navigator.share({title:'Espelho do pedido',text:t});pmsg('Espelho enviado para o compartilhamento.');return}}catch(e){if(e&&e.name==='AbortError')return}
+ try{await navigator.clipboard.writeText(t);pmsg('Espelho copiado. Cole no WhatsApp.')}catch(e){pmsg('Não consegui copiar.',1)}}
+async function pdCSV(){
+ const T=pdTotais();if(!PD.itens.length&&!PED.length){pmsg('Nada para exportar.',1);return}
+ const z=n=>String(n).padStart(2,'0'),d=new Date(),q=s=>{s=String(s==null?'':s);return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s},f=v=>Number(v||0).toFixed(2).replace('.',',');
+ const L=PD.itens.map(i=>{const r=i.cod?byCod.get(i.cod):null,ce=pdCusto(r);
+  return [PD.forn||'',i.cod||'',i.desc,nfmt(i.q),f(i.pc),pdEmb(i),f(pdUnit(i)),f(i.q*i.pc),ce?f(ce):'',r&&r[3]?f(r[3]):''].map(q).join(';')});
+ const csv='\uFEFF'+'fornecedor;cod_interno;descricao;quantidade;custo_embalagem;un_por_embalagem;custo_unitario;subtotal;custo_erp;preco_venda\r\n'+L.join('\r\n')+'\r\n;;;;;;;TOTAL;'+f(T.v)+'\r\n';
+ await entrega('Kostta_pedido_'+d.getFullYear()+z(d.getMonth()+1)+z(d.getDate())+'_'+z(d.getHours())+z(d.getMinutes())+'.csv',csv,'text/csv;charset=utf-8','#pmsg')}
+function aba(n){['ped','conf','vend','grade','aj'].forEach(k=>{$('#v-'+k).classList.toggle('on',k===n);$('#t-'+k).classList.toggle('on',k===n)});$('#sub').textContent={conf:'Recebe',vend:'Modo Blecaute',ped:'Pedidos',grade:'Grade do ERP',aj:'Ajustes'}[n]||'';try{window.scrollTo(0,0)}catch(e){}}
 document.querySelectorAll('.tabs button').forEach(bt=>{bt.onclick=()=>aba(bt.dataset.tab)});
 $('#gchip').onclick=()=>aba('grade');
 $('#ver').textContent=VER;
@@ -926,6 +1281,42 @@ let EVI=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();EVI=e;$('#binst').hidden=false});
 $('#binst').onclick=async()=>{if(!EVI)return;EVI.prompt();try{await EVI.userChoice}catch(x){}EVI=null;$('#binst').hidden=true};
 if('serviceWorker' in navigator&&HOSP){try{navigator.serviceWorker.register('sw.js').catch(()=>{})}catch(e){}}
+$('#pforn').oninput=e=>{PD.forn=e.target.value.trim().slice(0,60);pdsalva()};
+$('#pm-manual').onclick=()=>pdModo('manual');$('#pm-csv').onclick=()=>pdModo('csv');$('#pm-import').onclick=()=>pdModo('import');
+$('#pcsvb').onclick=()=>{pmsg('Escolha o arquivo CSV…');$('#pfcsv').click()};
+$('#pfcsv').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)pdCSVin(f)};
+$('#pcod').onclick=()=>{pmsg('Abrindo a câmera…');$('#pfc').click()};
+$('#pfc').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)pdCodigo(f)};
+$('#pbm').oninput=e=>{PBM=e.target.value;PSEL=0;clearTimeout(window.__pbm);window.__pbm=setTimeout(pdBuscaDraw,300)};
+$('#pbm').onkeydown=e=>{
+ if(!PRS.length)return;
+ if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();PSEL=(PSEL+(e.key==='ArrowDown'?1:PRS.length-1))%PRS.length;pdBuscaDraw();const s=$('.pbr.on');if(s&&s.scrollIntoView)s.scrollIntoView({block:'nearest'});return}
+ if(e.key==='Enter'){e.preventDefault();const r=PRS[PSEL];if(r){pdAdd(r);PBM='';PSEL=0;PRS=[];e.target.value='';pdBuscaDraw();e.target.focus()}}};
+$('#pres').onclick=e=>{const c=e.target.dataset.pa;if(c&&byCod.has(c)){pdAdd(byCod.get(c));PBM='';$('#pbm').value='';pdBuscaDraw()}};
+$('#pcop').onclick=async()=>{const t=$('#ptxt').value;if(!t.trim()){pmsg('Nada para copiar.',1);return}try{await navigator.clipboard.writeText(t);pmsg('Texto copiado. Cole aqui no chat para eu analisar.')}catch(e){$('#ptxt').focus();$('#ptxt').select();pmsg('Selecionei o texto: copie com Ctrl+C.')}};
+$('#pana').onclick=pdAnalisa;
+$('#ppdf').onclick=()=>{pmsg('Escolha o arquivo PDF…');$('#pfp').click()};
+$('#pfoto').onclick=()=>{pmsg('Escolha a imagem…');$('#pfi').click()};
+$('#pfp').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)pdPDF(f)};
+$('#pfi').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)pdFoto(f)};
+$('#psalva').onclick=pdSalva;$('#pesp').onclick=()=>pdShare(-1);$('#pcsv').onclick=pdCSV;
+$('#pzera').onclick=()=>{if(!PD.itens.length)return;PD.itens=[];PD.ok=false;PBQ={};pdsalva();pddraw();pmsg('Itens apagados.')};
+$('#plista').onclick=e=>{const t=e.target.dataset;
+ if(t.pr!=null){PD.itens.splice(+t.pr,1);PBQ={};pdsalva();pddraw();return}
+ if(t.pt!=null){const i=+t.pt;PBQ[i]=PBQ[i]!=null?null:(PD.itens[i].desc||'');if(PBQ[i]===null)delete PBQ[i];pddraw();return}
+ if(t.pc!=null){const j=t.pc.indexOf('#'),i=+t.pc.slice(0,j),c=t.pc.slice(j+1);
+  PD.itens[i].cod=c;PD.itens[i].conf=true;PEDAS[H(PD.itens[i].desc)]=c;LS.set('pedas',PEDAS);delete PBQ[i];pdsalva();pddraw();return}};
+$('#pavis').onchange=e=>{if(e.target.dataset.pok){PD.ok=!!e.target.checked;pdsalva();pmsg(PD.ok?'Conferência marcada. Pode salvar o pedido.':'')}};
+$('#plista').onchange=e=>{const t=e.target.dataset;
+ if(t.pq!=null){const v=num(e.target.value);PD.itens[+t.pq].q=v>0?v:1;pdsalva();pddraw();return}
+ if(t.pp!=null){PD.itens[+t.pp].pc=num(e.target.value)||0;pdsalva();pddraw();return}
+ if(t.pe2!=null){const n=parseInt(String(e.target.value).replace(/\D/g,''),10);PD.itens[+t.pe2].emb=n>0?n:1;pdsalva();pddraw();return}};
+$('#plista').oninput=e=>{const i=e.target.dataset.pb;if(i!=null){PBQ[+i]=e.target.value;clearTimeout(window.__pb);window.__pb=setTimeout(()=>{pddraw();const el=$('.pbi');if(el)el.focus()},450)}};
+$('#phist').onclick=e=>{const t=e.target.dataset;
+ if(t.pconf!=null){pdStatus(+t.pconf,'conf');return}
+ if(t.pvolta!=null){pdStatus(+t.pvolta,'aberto');return}
+ if(t.pe!=null){pdShare(+t.pe);return}
+ if(t.px!=null){PED.splice(+t.px,1);LS.set('pedidos',PED);pddraw();pmsg('Pedido removido deste aparelho.')}};
 $('#vfi').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)vfoto(f)};
 $('#vfi2').onchange=$('#vfi').onchange;
 $('#bvf').onclick=()=>{vmsg('Abrindo a câmera…');$('#vfi').click()};
@@ -948,8 +1339,8 @@ $('#bgpub').onclick=()=>{aba('aj');gradePublica()};
 $('#bgbaixa').onclick=()=>{aba('aj');gradeBaixa(true)};
 $('#bfg').onclick=()=>{$('#gmsg').className='hint';$('#gmsg').textContent='Escolha o arquivo da Grade no seletor…';$('#fg').click()};$('#bfi').onclick=()=>$('#fi').click();$('#bfi2').onclick=()=>$('#fi2').click();
 $('#bxml').onclick=buscaXml;$('#bck').onclick=copiaChave;
-params();draw();vdraw();nuvemDraw();aba(G?'conf':'grade');
-if(logado())setTimeout(()=>{gradeBaixa(false);sincroniza(true);embSync(true)},800);
+params();draw();vdraw();pddraw();pdModo(PMODO,true);$('#pforn').value=PD.forn||'';nuvemDraw();aba(G?'ped':'grade');
+if(logado())setTimeout(()=>{gradeBaixa(false);sincroniza(true);embSync(true);pdSinc(true)},800);
 </script>
 </body>
 </html>

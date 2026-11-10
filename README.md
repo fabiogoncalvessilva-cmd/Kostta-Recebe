@@ -3,11 +3,12 @@
 Aplicativo web (PWA) de operação de loja do Mercado Kostta, com dois módulos sobre a mesma Grade do ERP:
 
 - **Recebe** — conferência de recebimento: lê o XML da NF-e, cruza com a Grade e indica, por item, cadastro, margem, variação de custo e ação necessária.
+- **Pedidos** — compra para reposição: importa o pedido de uma conversa, PDF ou foto, associa cada item à Grade, compara o custo pedido com o do ERP e gera o espelho do pedido.
 - **Modo Blecaute** — venda sem energia: lê o código de barras do produto, monta a lista com quantidades, fecha vendas e gera o relatório do período.
 
 - **Repositório:** https://github.com/fabiogoncalvessilva-cmd/Kostta-Recebe
 - **Aplicativo (GitHub Pages):** https://fabiogoncalvessilva-cmd.github.io/Kostta-Recebe/
-- **Versão:** 2026.11.06 (mostrada em Ajustes) · arquivo único `index.html`, sem servidor, dados só no aparelho
+- **Versão:** 2026.11.10 (mostrada em Ajustes) · arquivo único `index.html`, sem servidor, dados só no aparelho
 
 ## 1. Fluxo de uso
 
@@ -51,6 +52,7 @@ Aplicativo web (PWA) de operação de loja do Mercado Kostta, com dois módulos 
 | Aba | Conteúdo |
 |---|---|
 | Vendas | Modo Blecaute (ver seção 4) |
+| Pedidos | Compra para reposição (ver seção 5) |
 | Conferir | Chave, XML, resumo, visualização completa/resumida, filtros (inclui *Custo alterado*), compartilhar lista, exportar CSV, limpar nota |
 | Grade | Produtos, data, origem, idade (alerta após 7 dias), margem da Grade (% dentro/abaixo/acima) com histórico de cargas; carregar Grade e salvar página com a Grade (computador) |
 | Ajustes | Parâmetros, exemplo com dados fictícios, instalação do app |
@@ -77,21 +79,37 @@ Objetivo: registrar vendas no celular quando o caixa está fora do ar, usando a 
 
 Preço usado: `P.VENDA` da Grade. A lista e as vendas fechadas ficam guardadas no aparelho e sobrevivem a fechar o app ou ficar sem bateria.
 
-## 5. Dados
+## 5. Pedidos (compra para reposição)
+
+Feito no celular, no chão de loja. O **fornecedor** é sempre digitado. Três modos, nesta ordem de preferência:
+
+1. **Manual (preferido):** ler o código de barras pela câmera ou buscar na Grade por nome ou código (setas ↑ ↓ e Enter no computador). O item entra com quantidade 1; informe quantidade e custo negociado.
+2. **Planilha (CSV):** peça o pedido em Excel/CSV ao vendedor. O app reconhece as colunas pelo cabeçalho (descrição, quantidade, preço, código de barras, código) e também lê sem cabeçalho, pela ordem das colunas.
+3. **PDF/texto (último caso):** cola de conversa, leitura de PDF ou foto (OCR). Leitura por heurística: identifica a linha pela conta quantidade × valor unitário = total, pega o EAN quando existe e descarta cabeçalhos e linhas de coluna repetida. **O app não deixa salvar sem marcar "Conferi todos os itens".**
+
+Em qualquer modo: cada item é associado à Grade (*confirmado* pelo EAN ou pela sua escolha, *sugerido* pelo nome), e as associações ficam guardadas por descrição. Por item: **un. por embalagem** (detectada por "C/N" ou pela unidade), **custo unitário**, **custo do ERP**, **variação**, **preço de venda atual** e **lucro se comprar**.
+
+**Salvar pedido** guarda no aparelho e envia para a nuvem; **Espelho** gera o texto para o WhatsApp; **Exportar CSV** inclui custo da embalagem, unidades e custo unitário. A lista **Pedidos realizados** mostra data, fornecedor, itens, total e status (**Aberto**, **Em conferência**, **Recebido**), com o botão *enviar para conferência*. Trocar de modo limpa os itens em edição.
+
+Tabela na nuvem: `pedidos` (fornecedor, total, status, itens). SQL em `supabase-pedidos.sql`.
+
+## 6. Dados
 
 **Grade (entrada):** relatório do ERP em texto com tabulação (`grade_DDMM.xls`) ou CSV. Colunas usadas: `CODIGO`, `DESCRICAO DO PRODUTO`, `P.VENDA`, `*C/ENC.` (ou `C.COMP`), `COD. BARRA` (8+ dígitos) e a coluna sem nome com "OF" (oferta). O cabeçalho é localizado sozinho.
 
 **Guardado no aparelho** (navegador): Grade, parâmetros, embalagens e pesos por fornecedor, associações EAN > código, perfis de fornecedor, histórico de cargas, chaves já carregadas.
 
+**Compartilhado na nuvem (Supabase):** Grade publicada, vendas do Modo Blecaute, conferências de recebimento, embalagens e pesos por fornecedor, associações EAN > código. A sincronização é automática ao entrar e ao abrir o app; em Ajustes há os botões *Sincronizar agora* e *Embalagens*. Regra de conflito: um valor definido à mão vence o detectado automaticamente; entre dois iguais, vence o mais recente.
+
 **Exportação (CSV, 29 colunas, `;`, UTF-8):** data, NF, fornecedor, código interno, EANs, descrição, custos, variação, preço, markup, lucro, faixa, preço sugerido, status, preço ajustado, oferta, `chave_linha`, `chave_nfe`. Nome: `Kostta_conferencia_AAAAMMDD_HHMM.csv`.
 
-## 6. Histórico e indicadores (Excel)
+## 7. Histórico e indicadores (Excel)
 
 - `Kostta_Historico.xlsx`: painel com margem da Grade por data, preços e custos que subiram/caíram entre Grades, conferências por status e mês, ajustes confirmados (preço mudou na Grade seguinte) e itens recorrentes.
 - `consultas_power_query.txt`: 6 consultas (Conferencias, GradeHistorico, GradeResumo, PrecoMudancas, AjustesConfirmados, Recorrencia). Leem a pasta de CSVs exportados e a pasta de Grades (`grade_DDMM.xls`).
 - Parâmetros da planilha: pastas, faixa de lucro, tolerância de custo (aba *Parametros*, tabela `tblParam`).
 
-## 7. Implantação e atualização
+## 8. Implantação e atualização
 
 - **Arquivos** (mesma pasta): `index.html`, `manifest.webmanifest`, `sw.js`, `icon-192.png`, `icon-512.png`, `icon-512-maskable.png`, `apple-touch-icon.png`.
 - **Hospedagem:** GitHub Pages (repositório público, branch `main`, raiz). O repositório não contém Grade, custos nem preços.
@@ -99,13 +117,32 @@ Preço usado: `P.VENDA` da Grade. A lista e as vendas fechadas ficam guardadas n
 - **Instalar (Android/Chrome):** abrir o endereço github.io, menu ⋮ > Adicionar à tela inicial > **Instalar** (a opção "Criar atalho" não instala o app). iPhone (Safari): Compartilhar > Adicionar à Tela de Início.
 - **Alternativa sem hospedagem:** *Salvar página com a Grade* gera um HTML com a Grade e as configurações embutidas, para abrir no Chrome do celular (não pela visualização do Drive). **Contém custos e preços: manter privado.**
 
-## 8. Limitações conhecidas
+## 9. Etapas do projeto
 
-- Dados e memórias ficam por aparelho e navegador; não há compartilhamento entre colaboradores.
+| # | Etapa | Situação |
+|---|---|---|
+| 1 | Leitura do XML da NF-e e cruzamento com a Grade do ERP | Concluída |
+| 2 | Custo unitário por embalagem, peso e perfil de fornecedor | Concluída |
+| 3 | Margem, preço sugerido e status por item | Concluída |
+| 4 | Variação de custo entre a nota e o ERP | Concluída |
+| 5 | Aplicativo instalável (PWA) hospedado no GitHub Pages | Concluída |
+| 6 | Modo Blecaute: venda, fechamento e relatórios | Concluída |
+| 7 | Nuvem (Supabase): Grade publicada, vendas e conferências compartilhadas | Concluída |
+| 8 | Histórico e indicadores no Excel/Power Query | Entregue, em uso inicial |
+| 9 | Painel gerencial no Power BI sobre a base da nuvem | A fazer |
+| 10 | Módulo Pedidos: manual, planilha, PDF/texto, associação à Grade, espelho e status | Concluída |
+| 11 | Confronto automático do pedido com a nota no módulo Recebe | A fazer |
+| 12 | Conferência fiscal (NCM, CEST, CST) | A fazer: depende de exportação do ERP com esses campos |
+
+## 10. Limitações conhecidas
+
+- Cada aparelho guarda uma cópia local de tudo para funcionar sem internet; Grade, vendas, conferências, embalagens e associações são compartilhadas pela nuvem.
 - O download do XML no Meu DANFE é manual (o site usa verificação anti-robô). O destino do download é configuração do navegador.
 - Leitura por foto: exige imagem nítida e pouco inclinada; na primeira vez baixa uma biblioteca (internet).
 - Não há conferência de NCM, CEST ou CST (a Grade exportada não traz esses campos).
 - Variação de custo compara com o custo com encargos do ERP, que pode incluir frete ou outras despesas.
+- Em Pedidos, a leitura de PDF/texto é heurística: alguns layouts saem por colunas e podem perder ou trocar itens. Use Manual ou Planilha; o botão *Copiar texto para suporte* envia o texto extraído para análise.
+- Preços escritos à mão no PDF não são lidos: ajuste o custo na linha do item.
 - Modo Blecaute não emite documento fiscal nem baixa estoque: é um registro para conferir o caixa e lançar no ERP depois.
 - As vendas ficam no aparelho em que foram feitas; com vários celulares, cada um gera o seu relatório.
 - Próxima evolução prevista: base compartilhada (Grade e histórico) para vários colaboradores.
