@@ -8,7 +8,7 @@ Aplicativo web (PWA) de operação de loja do Mercado Kostta, com dois módulos 
 
 - **Repositório:** https://github.com/fabiogoncalvessilva-cmd/Kostta-Recebe
 - **Aplicativo (GitHub Pages):** https://fabiogoncalvessilva-cmd.github.io/Kostta-Recebe/
-- **Versão:** 2026.11.10 (mostrada em Ajustes) · arquivo único `index.html`, sem servidor, dados só no aparelho
+- **Versão:** 2026.11.11 (mostrada em Ajustes) · arquivo único `index.html`, sem servidor, dados só no aparelho
 
 ## 1. Fluxo de uso
 
@@ -89,7 +89,9 @@ Feito no celular, no chão de loja. O **fornecedor** é sempre digitado. Três m
 
 Em qualquer modo: cada item é associado à Grade (*confirmado* pelo EAN ou pela sua escolha, *sugerido* pelo nome), e as associações ficam guardadas por descrição. Por item: **un. por embalagem** (detectada por "C/N" ou pela unidade), **custo unitário**, **custo do ERP**, **variação**, **preço de venda atual** e **lucro se comprar**.
 
-**Salvar pedido** guarda no aparelho e envia para a nuvem; **Espelho** gera o texto para o WhatsApp; **Exportar CSV** inclui custo da embalagem, unidades e custo unitário. A lista **Pedidos realizados** mostra data, fornecedor, itens, total e status (**Aberto**, **Em conferência**, **Recebido**), com o botão *enviar para conferência*. Trocar de modo limpa os itens em edição.
+**Fluxo de digitação:** ao escolher o produto, ele abre num cartão de edição (un. por embalagem, quantidade e custo, nessa ordem; o custo usa máscara de dinheiro, só números). Ao concluir (tecla OK ou *Concluir item*), o item vira uma linha compacta — código, descrição, quantidade × custo, valor unitário e subtotal, com ✕ — a lista fica em ordem alfabética e o cursor volta para a busca. Tocar na linha reabre o item.
+
+**Salvar pedido** guarda no aparelho, envia para a nuvem e **limpa a tela** (itens, fornecedor e busca) para o próximo pedido; **Espelho** gera o texto para o WhatsApp; **Exportar CSV** inclui custo da embalagem, unidades e custo unitário. A lista **Pedidos realizados** mostra data, fornecedor, itens, total e status (**Aberto**, **Em conferência**, **Recebido**), com o botão *enviar para conferência*. Trocar de modo limpa os itens em edição.
 
 Tabela na nuvem: `pedidos` (fornecedor, total, status, itens). SQL em `supabase-pedidos.sql`.
 

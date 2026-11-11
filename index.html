@@ -106,8 +106,23 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 .ta{width:100%;margin-top:6px;padding:9px;border:1px solid var(--bd);border-radius:11px;background:var(--bg);color:var(--tx);font:12.5px/1.45 Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;resize:vertical}
 .meta select{height:28px;padding:0 6px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
 #res>p.hint{text-align:center;padding:8px 0}
-.pitem{border-top:1px solid var(--bd);padding:10px 0}
-.prow{display:grid;grid-template-columns:56px minmax(0,1fr) 84px 20px;gap:7px;align-items:center}
+.pitem{border-top:1px solid var(--bd);padding:12px 0}
+.pitem.edit{border:2px solid var(--pri);border-radius:14px;padding:12px;margin-bottom:10px;background:var(--card)}
+.plinhas{border-top:1px solid var(--bd)}
+.prow2{display:grid;grid-template-columns:auto minmax(0,1fr) auto 20px;gap:3px 8px;align-items:center;padding:9px 2px;border-bottom:1px solid var(--bd);cursor:pointer}
+.prow2 .cd{font-weight:800;font-size:12.5px;border:1.5px solid var(--pri);border-radius:8px;padding:1px 7px;text-align:center}
+.prow2 .cd.nc{border-color:var(--bd);color:var(--mut);font-weight:600;font-size:10.5px}
+.prow2 .sd{font-weight:650;font-size:13.5px;overflow-wrap:anywhere}
+.prow2 .qp{grid-column:2;font-size:11.5px;color:var(--mut)}
+.prow2 .st2{grid-row:1/3;grid-column:3;font-size:14px;font-weight:800;text-align:right;white-space:nowrap}
+.prow2 .vx{grid-row:1/3;grid-column:4}
+.pemb{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.pemb label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:650;color:var(--warn)}
+.pemb input{width:68px;height:36px;padding:0 8px;border:1.5px solid var(--warn);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit;font-size:14px;text-align:center}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) 22px;gap:8px;align-items:start}
+.pqc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.pqc label{display:block;font-size:11px;color:var(--mut);font-weight:600}
+.pqc input{width:100%;height:40px;margin-top:3px;padding:0 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;font-size:15px;text-align:center}
 .prow .pd{font-size:13.5px;font-weight:650;line-height:1.25;overflow-wrap:anywhere}
 .pq,.pp{height:32px;padding:0 6px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit;font-size:13px;text-align:center;width:100%}
 .pg2{margin-top:6px;font-size:12px;color:var(--mut);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
@@ -128,8 +143,16 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
 .pconf{display:flex;align-items:center;gap:9px;margin:10px 0 0;font-weight:650;font-size:13.5px;color:var(--warn)}
 .pconf input{width:20px;height:20px;accent-color:var(--pri)}
 .pbusca{margin-top:8px;padding:8px;background:var(--soft);border-radius:10px}
-.pbr{width:100%;display:block;margin:5px 0;text-align:left}
-.pbr.on{background:var(--pri);color:var(--prit);border-color:var(--pri)}
+.plist{max-height:min(320px,46vh);overflow-y:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--bd);border-radius:12px;background:var(--card);scrollbar-width:thin;scrollbar-color:var(--pri) var(--soft)}
+.plist::-webkit-scrollbar{width:12px}
+.plist::-webkit-scrollbar-track{background:var(--soft);border-radius:8px}
+.plist::-webkit-scrollbar-thumb{background:var(--pri);border-radius:8px;border:3px solid var(--soft)}
+.pbr{display:grid;grid-template-columns:minmax(0,1fr) 36px;align-items:center;gap:2px 10px;width:100%;min-height:60px;padding:11px 12px;border:0;border-bottom:1px solid var(--bd);background:transparent;color:var(--tx);font:inherit;text-align:left;cursor:pointer}
+.pbr:last-child{border-bottom:0}
+.pbr .pbn{font-size:14px;font-weight:650;line-height:1.25;overflow-wrap:anywhere}
+.pbr .pbm2{grid-column:1;font-size:11.5px;color:var(--mut)}
+.pbr .pbp{grid-row:1/3;grid-column:2;width:36px;height:36px;border-radius:50%;background:var(--pri);color:var(--prit);font-size:21px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.pbr.on,.pbr:active{background:var(--soft)}
 .pbi{width:100%;height:36px;padding:0 10px;border:1px solid var(--bd);border-radius:9px;background:var(--card);color:var(--tx);font:inherit;font-size:13.5px}
 .vhead,.vrow{display:grid;grid-template-columns:20px minmax(0,1fr) 56px auto 20px;gap:7px;align-items:center}
 .vhead{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);padding:0 2px 6px}
@@ -219,6 +242,7 @@ summary{font-weight:700;font-size:13.5px;cursor:pointer}
   <p id="pmsg" class="hint"></p>
 </section>
 <section class="box">
+  <div id="pedit"></div>
   <div id="pavis"></div>
   <div id="ptot"></div>
   <div class="btns" id="pbtn" hidden><button class="btn pri" id="psalva">Salvar pedido</button><button class="btn" id="pesp">Espelho</button><button class="btn" id="pcsv">Exportar CSV</button><button class="btn" id="pzera">Limpar itens</button></div>
@@ -292,7 +316,7 @@ function buildIdx(rows){idx=new Map();byCod=new Map();for(const r of rows){const
 const MOVEL=!!(/Android|iPhone|iPad|iPod|Mobile|Silk/i.test(navigator.userAgent||'')||((window.matchMedia&&matchMedia('(pointer:coarse)').matches)&&innerWidth<820));
 document.documentElement.classList.toggle('movel',MOVEL);
 const HOSP=/^https?:/.test(location.protocol);document.documentElement.classList.toggle('hosp',HOSP);
-const VER='2026.11.10';
+const VER='2026.11.11';
 let DG=['v'+VER,'JavaScript ativo'];
 {let ls='ok';try{localStorage.setItem('_k','1');localStorage.removeItem('_k')}catch(e){ls='bloqueado'}DG.push('armazenamento '+ls)}
 try{const pk=document.getElementById('pacote');
@@ -1161,21 +1185,55 @@ function pdModo(m,quieto){
  PMODO=m;LS.set('pmodo',PMODO);
  ['manual','csv','import'].forEach(k=>{$('#pm-'+k).classList.toggle('on',k===PMODO);$('#pp-'+k).hidden=k!==PMODO});
  pddraw();pmsg('')}
+function aoTopo(el,alto){
+ if(!el)return;
+ const topo=document.querySelector('.top'),hcab=topo?topo.getBoundingClientRect().height:52;
+ const mover=()=>{try{
+  if(!document.contains(el))return;
+  const vv=window.visualViewport,alt=vv?vv.height:(window.innerHeight||600),off=vv?(vv.offsetTop||0):0;
+  const r=el.getBoundingClientRect();
+  if(!r.height&&!r.top)return;
+  const alvo=alto?(off+hcab+12):(off+Math.min(Math.max(hcab+12,alt*0.30),Math.max(hcab+12,alt-r.height-16)));
+  const y=Math.max(0,Math.round((window.pageYOffset||document.documentElement.scrollTop||0)+r.top-alvo));
+  const atual=Math.round(window.pageYOffset||document.documentElement.scrollTop||0);
+  if(Math.abs(y-atual)<6)return;
+  try{window.scrollTo({top:y,behavior:'auto'})}catch(e){window.scrollTo(0,y)}
+  try{const r2=el.getBoundingClientRect();if(r2.top<off+hcab||r2.bottom>off+alt)el.scrollIntoView({block:'center'})}catch(e){}
+ }catch(e){}};
+ mover();[80,200,400,700,1000,1400].forEach(t=>setTimeout(mover,t))}
+let ULT=null,ULTt=0;
+function marcaFoco(el){ULT=el||null;ULTt=Date.now()}
+function focoAtual(){
+ const a=document.activeElement;
+ if(a&&a.id==='pbm')return a;
+ if(a&&a.dataset&&(a.dataset.pq!=null||a.dataset.pp!=null||a.dataset.pe2!=null))return a;
+ if(ULT&&Date.now()-ULTt<20000&&document.contains(ULT))return ULT;
+ return null}
+try{if(window.visualViewport)window.visualViewport.addEventListener('resize',()=>{const e=focoAtual();if(e)aoTopo(e,e.id==='pbm')})}catch(e){}
 function pdAdd(r,q,pc){
  if(!PD.itens.length)PD.origem='manual';
- PD.itens.unshift({desc:r[2],q:q||1,pc:pc||0,cod:r[1],ean:r[0],conf:true});pdsalva();pddraw();
- pmsg('✓ Adicionado: <b>'+esc(r[2])+'</b>. Informe a quantidade e o custo negociado.')}
+ const novo={id:pdid(),desc:r[2],q:q||0,pc:pc||0,cod:r[1],ean:r[0],conf:true};
+ PD.itens.unshift(novo);PD.edit=novo.id;pdsalva();pddraw();pmsg('');
+ const el=$('[data-pq="0"]');
+ if(el){
+  try{el.focus({preventScroll:true})}catch(e){try{el.focus()}catch(x){}}
+  try{el.click&&el.click()}catch(e){}
+  try{el.select()}catch(e){}
+  marcaFoco(el);aoTopo(el)}}
 function pdBuscaDraw(){
  const el=$('#pres');if(!el)return;
  const q=PBM.trim();
  if(!q){el.innerHTML='';return}
  if(!idx.size){el.innerHTML='<p class="hint err">Carregue a Grade primeiro.</p>';return}
- let rs=[];const d=q.replace(/\D/g,'');
+ let rs=[];const d=/^[\d\s.\-]+$/.test(q)?q.replace(/\D/g,''):'';
  if(d.length>=3){for(const c of cands({cT:d,cE:d})){if(idx.has(c)){rs=[idx.get(c)];break}}
   if(!rs.length&&byCod.has(d))rs=[byCod.get(d)]}
  if(!rs.length)rs=buscaNome(q,8);
  PRS=rs;if(PSEL>=rs.length)PSEL=0;
- el.innerHTML=rs.length?rs.map((x,i)=>'<button class="chip pbr'+(i===PSEL?' on':'')+'" data-pa="'+esc(x[1])+'">'+esc(x[1])+' · '+esc(x[2])+' · '+R(x[3])+'</button>').join('')+(rs.length>1?'<p class="hint">↑ ↓ para escolher · Enter para adicionar</p>':''):'<p class="hint">Nada encontrado na Grade.</p>'}
+ if(!rs.length){el.innerHTML='<p class="hint">Nada encontrado na Grade.</p>';return}
+ el.innerHTML='<p class="hint" style="margin:8px 0 5px">'+(rs.length===1?'1 produto encontrado. Toque nele para incluir.':rs.length+' produtos. Role a lista e toque no produto.')+'</p>'
+  +'<div class="plist">'+rs.map((x,i)=>'<button class="pbr'+(!MOVEL&&i===PSEL?' on':'')+'" data-pa="'+esc(x[1])+'"><span class="pbn">'+esc(x[2])+'</span><span class="pbm2">cód. '+esc(x[1])+' · '+R(x[3])+'</span><span class="pbp">+</span></button>').join('')+'</div>'
+  +(MOVEL?'':'<p class="hint">↑ ↓ para escolher · Enter para adicionar</p>')}
 async function pdCodigo(f){
  pmsg('Lendo o código…');
  try{
@@ -1187,42 +1245,74 @@ async function pdCodigo(f){
   for(const c of cands({cT:d,cE:d})){if(idx.has(c)){pdAdd(idx.get(c));return}}
   PBM=d;$('#pbm').value=d;pdBuscaDraw();pmsg('Código '+esc(d)+' não está na Grade. Procure pelo nome.',1)}
  catch(e){pmsg('Não foi possível ler ('+esc(e.message)+').',1)}}
-function pdTotais(){let q=0,v=0,sem=0;PD.itens.forEach(i=>{q+=i.q;v+=i.q*i.pc;if(!i.cod)sem++});return {n:PD.itens.length,q:Math.round(q*1000)/1000,v,sem}}
-function pddraw(){
- const el=$('#plista');if(!el)return;
- const T=pdTotais();
- if(!PD.itens.length){el.innerHTML='<p class="hint">Nenhum item. Cole a conversa do WhatsApp, leia um PDF ou uma foto e toque em Analisar.</p>';$('#pbtn').hidden=true}
- else{
-  el.innerHTML=PD.itens.map((it,i)=>{
-   const r=it.cod?byCod.get(it.cod):null,ce=pdCusto(r),emb=pdEmb(it),cu=pdUnit(it),dv=(ce>0&&cu>0)?cu/ce-1:null,
-    lucro=(r&&r[3]>0&&cu>0)?(1-cu/r[3])*100:null;
-   let h='<div class="pitem"><div class="prow"><input class="pq" inputmode="decimal" data-pq="'+i+'" value="'+nfmt(it.q)+'"><b class="pd">'+esc(it.desc)+(it.un?' <span style="font-weight:600;color:var(--mut)">'+esc(it.un)+'</span>':'')+'</b><input class="pp" inputmode="decimal" data-pp="'+i+'" value="'+(it.pc?it.pc.toFixed(2).replace('.',','):'')+'" placeholder="custo"><button class="vx" data-pr="'+i+'">✕</button></div>';
-   h+=r?'<div class="pg2"><span class="badge '+(it.conf?'c-ok':'c-warn')+'">'+(it.conf?'confirmado':'sugerido')+'</span> <b>'+esc(r[1])+'</b> · '+esc(r[2])+' <button class="chip" data-pt="'+i+'">trocar</button></div>'
-          :'<div class="pg2"><span class="badge c-info">sem produto</span> <button class="chip" data-pt="'+i+'">procurar na Grade</button></div>';
-   h+='<div class="emb"><label>Un. por embalagem <input data-pe2="'+i+'" inputmode="numeric" value="'+emb+'"></label>'+(emb>1?' <small>custo unitário <b>'+R(cu)+'</b></small>':'')+'</div>';
-   if(r)h+='<div class="pg"><div><small>Custo ERP</small><b>'+(ce?R(ce):'—')+'</b></div><div><small>Variação</small><b class="'+(dv==null?'':dv>0.001?'r-aj':dv<-0.001?'r-ok':'')+'">'+(dv==null?'—':(dv>0?'▲ +':'▼ −')+(Math.abs(dv)*100).toFixed(1).replace('.',',')+'%')+'</b></div><div><small>Preço atual</small><b>'+(r[3]?R(r[3]):'—')+'</b></div><div><small>Lucro se comprar</small><b class="'+(lucro==null?'':lucro<P.min?'r-aj':lucro>P.max?'r-at':'r-ok')+'">'+(lucro==null?'—':lucro.toFixed(1).replace('.',',')+'%')+'</b></div></div>';
-   if(PBQ[i]!=null){const rs=buscaNome(PBQ[i]||it.desc,6);
-    h+='<div class="pbusca"><input class="pbi" data-pb="'+i+'" value="'+esc(PBQ[i]||it.desc)+'" placeholder="nome ou código do produto">'
-     +(rs.length?rs.map(x=>'<button class="chip" style="display:block;margin:5px 0;text-align:left" data-pc="'+i+'#'+esc(x[1])+'">'+esc(x[1])+' · '+esc(x[2])+' · '+R(x[3])+'</button>').join(''):'<p class="hint">Nada encontrado.</p>')+'</div>'}
-   return h+'</div>'}).join('');
-  $('#pbtn').hidden=false}
- const av=$('#pavis');
+function pdTotais(){let q=0,v=0,sem=0,sq=0;PD.itens.forEach(i=>{q+=i.q||0;v+=(i.q||0)*i.pc;if(!i.cod)sem++;if(!(i.q>0))sq++});return {n:PD.itens.length,q:Math.round(q*1000)/1000,v,sem,sq}}
+function pdid(){return 'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function pdOrdena(a,b){return H(a.desc).localeCompare(H(b.desc))}
+function pdCartao(it,i){
+ const r=it.cod?byCod.get(it.cod):null,ce=pdCusto(r),emb=pdEmb(it),cu=pdUnit(it),
+  dv=(ce>0&&cu>0)?cu/ce-1:null,lucro=(r&&r[3]>0&&cu>0)?(1-cu/r[3])*100:null;
+ let h='<div class="pitem edit">'
+  +'<div class="pemb"><label>Un. por embalagem<input data-pe2="'+i+'" inputmode="numeric" enterkeyhint="next" value="'+(it.emb>0?it.emb:'')+'" placeholder="'+emb+'"></label><span class="hint" id="pcu" style="margin:0">'+(emb>1&&it.pc>0?'custo unitário <b>'+R(cu)+'</b>':'')+'</span></div>'
+  +'<div class="prow"><b class="pd">'+esc(it.desc)+(it.un?' <span style="font-weight:600;color:var(--mut)">'+esc(it.un)+'</span>':'')+'</b><button class="vx" data-pr="'+i+'">✕</button></div>'
+  +'<div class="pqc"><label>Quantidade<input class="pq" inputmode="decimal" enterkeyhint="next" data-pq="'+i+'" value="'+(it.q>0?nfmt(it.q):'')+'" placeholder="qtd"></label>'
+  +'<label>Custo<input class="pp" inputmode="decimal" enterkeyhint="done" data-pp="'+i+'" value="'+(it.pc?it.pc.toFixed(2).replace('.',','):'')+'" placeholder="0,00"></label></div>';
+ h+=r?'<div class="pg2"><span class="badge '+(it.conf?'c-ok':'c-warn')+'">'+(it.conf?'confirmado':'sugerido')+'</span> <b>'+esc(r[1])+'</b> · '+esc(r[2])+' <button class="chip" data-pt="'+i+'">trocar</button></div>'
+        :'<div class="pg2"><span class="badge c-info">sem produto</span> <button class="chip" data-pt="'+i+'">procurar na Grade</button></div>';
+ if(r)h+='<div class="pg"><div><small>Custo ERP</small><b>'+(ce?R(ce):'—')+'</b></div><div><small>Variação</small><b class="'+(dv==null?'':dv>0.001?'r-aj':dv<-0.001?'r-ok':'')+'">'+(dv==null?'—':(dv>0?'▲ +':'▼ −')+(Math.abs(dv)*100).toFixed(1).replace('.',',')+'%')+'</b></div><div><small>Preço atual</small><b>'+(r[3]?R(r[3]):'—')+'</b></div><div><small>Lucro se comprar</small><b class="'+(lucro==null?'':lucro<P.min?'r-aj':lucro>P.max?'r-at':'r-ok')+'">'+(lucro==null?'—':lucro.toFixed(1).replace('.',',')+'%')+'</b></div></div>';
+ if(PBQ[i]!=null){const rs=buscaNome(PBQ[i]||it.desc,6);
+  h+='<div class="pbusca"><input class="pbi" data-pb="'+i+'" value="'+esc(PBQ[i]||it.desc)+'" placeholder="nome ou código do produto">'
+   +(rs.length?rs.map(x=>'<button class="chip" style="display:block;margin:5px 0;text-align:left" data-pc="'+i+'#'+esc(x[1])+'">'+esc(x[1])+' · '+esc(x[2])+' · '+R(x[3])+'</button>').join(''):'<p class="hint">Nada encontrado.</p>')+'</div>'}
+ h+='<div class="btns"><button class="btn pri" data-pok2="'+i+'">Concluir item</button></div>';
+ return h+'</div>'}
+function pdLinha(it,i){
+ const r=it.cod?byCod.get(it.cod):null;
+ return '<div class="prow2" data-ped="'+i+'"><span class="cd'+(it.cod?'':' nc')+'">'+(it.cod?esc(it.cod):'s/ cód')+'</span>'
+  +'<span class="sd">'+esc(it.desc)+'</span>'
+  +'<span class="qp">'+(it.q>0?nfmt(it.q):'<span class="err">sem qtd</span>')+' × '+(it.pc?R(it.pc):'<span class="err">sem custo</span>')+(pdEmb(it)>1&&it.pc?' · un '+R(pdUnit(it)):'')+'</span>'
+  +'<b class="st2">'+R((it.q||0)*(it.pc||0))+'</b>'
+  +'<button class="vx" data-pr="'+i+'">✕</button></div>'}
+function ptotDraw(){
+ const T=pdTotais(),av=$('#pavis');
  if(av)av.innerHTML=(PD.itens.length&&PD.origem==='import')
   ?'<div class="aviso">Itens vindos de PDF ou texto: confira descrição, quantidade e preço de cada linha.</div><label class="pconf"><input type="checkbox" data-pok="1"'+(PD.ok?' checked':'')+'> Conferi todos os itens</label>'
   :(PD.itens.length&&PD.origem==='csv'?'<p class="hint">Itens vindos de planilha. Confira as associações antes de salvar.</p>':'');
- $('#ptot').innerHTML=PD.itens.length?'<div class="tot"><div><small>Itens</small><b>'+T.n+'</b></div><div><small>Quantidade</small><b>'+nfmt(T.q)+'</b></div><div class="big"><small>Total do pedido</small><b>'+R(T.v)+'</b></div></div>'+(T.sem?'<p class="hint err">'+T.sem+(T.sem===1?' item sem produto associado.':' itens sem produto associado.')+'</p>':''):'';
+ $('#ptot').innerHTML=PD.itens.length?'<div class="tot"><div><small>Itens</small><b>'+T.n+'</b></div><div><small>Quantidade</small><b>'+nfmt(T.q)+'</b></div><div class="big"><small>Total do pedido</small><b>'+R(T.v)+'</b></div></div>'
+  +(T.sem?'<p class="hint err">'+T.sem+(T.sem===1?' item sem produto associado.':' itens sem produto associado.')+'</p>':'')
+  +(T.sq?'<p class="hint err">'+T.sq+(T.sq===1?' item sem quantidade.':' itens sem quantidade.')+'</p>':''):'';
+ $('#pbtn').hidden=!PD.itens.length}
+function pddraw(){
+ const el=$('#plista');if(!el)return;
+ PD.itens.forEach(x=>{if(!x.id)x.id=pdid()});
+ const ed=$('#pedit');
+ const i=PD.itens.findIndex(x=>x.id===PD.edit);
+ if(ed)ed.innerHTML=i>=0?pdCartao(PD.itens[i],i):'';
+ const outros=PD.itens.map((x,k)=>[x,k]).filter(([x])=>x.id!==PD.edit).sort((a,b)=>pdOrdena(a[0],b[0]));
+ el.innerHTML=outros.length?'<div class="plinhas">'+outros.map(([x,k])=>pdLinha(x,k)).join('')+'</div>'
+  :(PD.itens.length?'':'<p class="hint">Nenhum item. Leia o código de barras, busque o produto pelo nome ou use os modos Planilha e PDF/texto.</p>');
+ ptotDraw();
  const hs=$('#phist');if(!hs)return;
  if(!PED.length){hs.innerHTML='<p class="hint">Nenhum pedido salvo ainda.</p>';return}
  const ST2={aberto:['Aberto','c-info'],conf:['Em conferência','c-warn'],recebido:['Recebido','c-ok']};
  const cnt={aberto:0,conf:0,recebido:0};PED.forEach(x=>cnt[x.status||'aberto']++);
  hs.innerHTML='<div class="row" style="margin:14px 0 6px"><b class="t">Pedidos realizados</b><span class="hint" style="margin:0">'+cnt.aberto+' abertos · '+cnt.conf+' em conferência · '+cnt.recebido+' recebidos</span></div>'
  +'<div class="phead"><span>Data</span><span>Fornecedor</span><span>Itens</span><span>Total</span><span></span></div>'
- +PED.slice().reverse().map((x,k)=>{const i=PED.length-1-k,st=ST2[x.status||'aberto'];
+ +PED.slice().reverse().map((x,k)=>{const j=PED.length-1-k,st=ST2[x.status||'aberto'];
   return '<div class="pedr"><span class="pdt">'+hora(x.ts)+'</span><span class="pfn">'+esc(x.forn||'sem fornecedor')+'</span><span class="pit">'+x.itens.length+'</span><span class="pvl">'+R(x.total)+'</span>'
    +'<span class="pst"><span class="badge '+st[1]+'">'+st[0]+'</span>'+(x.nuvem?'':' <span class="badge c-warn">a enviar</span>')+'</span>'
-   +'<span class="pac">'+((x.status||'aberto')==='aberto'?'<button class="chip" data-pconf="'+i+'">enviar para conferência</button>':'')
-   +(x.status==='conf'?'<button class="chip" data-pvolta="'+i+'">voltar para aberto</button>':'')
-   +'<button class="chip" data-pe="'+i+'">espelho</button><button class="vx" data-px="'+i+'">✕</button></span></div>'}).join('')}
+   +'<span class="pac">'+((x.status||'aberto')==='aberto'?'<button class="chip" data-pconf="'+j+'">enviar para conferência</button>':'')
+   +(x.status==='conf'?'<button class="chip" data-pvolta="'+j+'">voltar para aberto</button>':'')
+   +'<button class="chip" data-pe="'+j+'">espelho</button><button class="vx" data-px="'+j+'">✕</button></span></div>'}).join('')}
+function pdAtualiza(i){
+ clearTimeout(window.__pat);window.__pat=setTimeout(()=>{pdsalva()},400);
+ ptotDraw();
+ const it=PD.itens[i];if(!it)return;
+ const cu=pdUnit(it),emb=pdEmb(it),el=$('#pcu');
+ if(el)el.innerHTML=(emb>1&&it.pc>0)?'custo unitário <b>'+R(cu)+'</b>':''}
+function pdFim(){
+ PD.edit=null;pdsalva();pddraw();
+ const b=$('#pbm');if(b){try{b.focus({preventScroll:true})}catch(e){try{b.focus()}catch(x){}}
+  marcaFoco(b);aoTopo(b,true)}}
+
 function pdEspelho(p){
  const z=n=>String(n).padStart(2,'0'),d=new Date(p.ts);
  return '*Kostta Loja · Espelho do pedido*\n'+esc(p.forn||'Fornecedor não informado')+'\n'+z(d.getDate())+'/'+z(d.getMonth()+1)+'/'+d.getFullYear()+' '+z(d.getHours())+':'+z(d.getMinutes())+'\n\n'
@@ -1234,8 +1324,14 @@ async function pdSalva(){
  const T=pdTotais(),p={ts:Date.now(),forn:PD.forn||'',itens:PD.itens.map(i=>({desc:i.desc,q:i.q,pc:i.pc,emb:pdEmb(i),cu:Math.round(pdUnit(i)*10000)/10000,cod:i.cod||'',ean:i.ean||'',un:i.un||'',conf:!!i.conf})),total:Math.round(T.v*100)/100,status:'aberto',nuvem:false};
  PED.push(p);if(PED.length>200)PED=PED.slice(-200);LS.set('pedidos',PED);
  PD.itens.forEach(i=>{if(i.cod&&i.conf){PEDAS[H(i.desc)]=i.cod}});LS.set('pedas',PEDAS);
- PD={forn:PD.forn,itens:[],origem:'manual',ok:false};pdsalva();pddraw();
- pmsg('✓ Pedido salvo com '+p.itens.length+' itens · '+R(p.total)+'.');
+ PD={forn:'',itens:[],origem:'manual',ok:false,edit:null};PBQ={};PBM='';PRS=[];pdsalva();
+ const b=$('#pbm');if(b)b.value='';
+ const f=$('#pforn');if(f)f.value='';
+ const tx=$('#ptxt');if(tx)tx.value='';
+ $('#pres').innerHTML='';
+ pddraw();
+ try{window.scrollTo({top:0,behavior:'auto'})}catch(e){window.scrollTo(0,0)}
+ pmsg('✓ Pedido salvo com '+p.itens.length+' itens · '+R(p.total)+'. Tela pronta para o próximo pedido.');
  if(logado())pdEnvia(p).then(()=>pddraw()).catch(()=>{})}
 async function pdStatus(i,s){
  const p=PED[i];if(!p)return;
@@ -1287,12 +1383,15 @@ $('#pcsvb').onclick=()=>{pmsg('Escolha o arquivo CSV…');$('#pfcsv').click()};
 $('#pfcsv').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)pdCSVin(f)};
 $('#pcod').onclick=()=>{pmsg('Abrindo a câmera…');$('#pfc').click()};
 $('#pfc').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)pdCodigo(f)};
-$('#pbm').oninput=e=>{PBM=e.target.value;PSEL=0;clearTimeout(window.__pbm);window.__pbm=setTimeout(pdBuscaDraw,300)};
+$('#pbm').onfocus=()=>{marcaFoco($('#pbm'));aoTopo($('#pbm'),true)};
+$('#pbm').onblur=()=>setTimeout(()=>{if(ULT&&ULT.contains&&ULT.contains($('#pbm')))marcaFoco(null)},50);
+$('#pbm').oninput=e=>{PBM=e.target.value;PSEL=0;clearTimeout(window.__pbm);window.__pbm=setTimeout(()=>{pdBuscaDraw();aoTopo($('#pbm'),true)},300)};
 $('#pbm').onkeydown=e=>{
  if(!PRS.length)return;
  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();PSEL=(PSEL+(e.key==='ArrowDown'?1:PRS.length-1))%PRS.length;pdBuscaDraw();const s=$('.pbr.on');if(s&&s.scrollIntoView)s.scrollIntoView({block:'nearest'});return}
  if(e.key==='Enter'){e.preventDefault();const r=PRS[PSEL];if(r){pdAdd(r);PBM='';PSEL=0;PRS=[];e.target.value='';pdBuscaDraw();e.target.focus()}}};
-$('#pres').onclick=e=>{const c=e.target.dataset.pa;if(c&&byCod.has(c)){pdAdd(byCod.get(c));PBM='';$('#pbm').value='';pdBuscaDraw()}};
+$('#pres').onclick=e=>{const b=e.target.closest?e.target.closest('[data-pa]'):null,c=(b&&b.dataset.pa)||e.target.dataset.pa;
+ if(c&&byCod.has(c)){pdAdd(byCod.get(c));PBM='';$('#pbm').value='';PRS=[];pdBuscaDraw()}};
 $('#pcop').onclick=async()=>{const t=$('#ptxt').value;if(!t.trim()){pmsg('Nada para copiar.',1);return}try{await navigator.clipboard.writeText(t);pmsg('Texto copiado. Cole aqui no chat para eu analisar.')}catch(e){$('#ptxt').focus();$('#ptxt').select();pmsg('Selecionei o texto: copie com Ctrl+C.')}};
 $('#pana').onclick=pdAnalisa;
 $('#ppdf').onclick=()=>{pmsg('Escolha o arquivo PDF…');$('#pfp').click()};
@@ -1301,18 +1400,40 @@ $('#pfp').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)pdPDF(f)
 $('#pfi').onchange=e=>{const f=e.target.files[0];e.target.value='';if(f)pdFoto(f)};
 $('#psalva').onclick=pdSalva;$('#pesp').onclick=()=>pdShare(-1);$('#pcsv').onclick=pdCSV;
 $('#pzera').onclick=()=>{if(!PD.itens.length)return;PD.itens=[];PD.ok=false;PBQ={};pdsalva();pddraw();pmsg('Itens apagados.')};
-$('#plista').onclick=e=>{const t=e.target.dataset;
- if(t.pr!=null){PD.itens.splice(+t.pr,1);PBQ={};pdsalva();pddraw();return}
+$('#pedit').onclick=e=>{const al=e.target.closest?e.target.closest('[data-pr],[data-pt],[data-pc],[data-pok2]'):null,t=(al&&al.dataset)||e.target.dataset;
+ if(t.pok2!=null){pdFim();return}
+ if(t.pr!=null){PD.itens.splice(+t.pr,1);PD.edit=null;PBQ={};pdsalva();pddraw();return}
  if(t.pt!=null){const i=+t.pt;PBQ[i]=PBQ[i]!=null?null:(PD.itens[i].desc||'');if(PBQ[i]===null)delete PBQ[i];pddraw();return}
  if(t.pc!=null){const j=t.pc.indexOf('#'),i=+t.pc.slice(0,j),c=t.pc.slice(j+1);
   PD.itens[i].cod=c;PD.itens[i].conf=true;PEDAS[H(PD.itens[i].desc)]=c;LS.set('pedas',PEDAS);delete PBQ[i];pdsalva();pddraw();return}};
+$('#pedit').oninput=e=>{const t=e.target.dataset;
+ if(t.pp!=null){
+  const d=String(e.target.value).replace(/\D/g,'').replace(/^0+(?=\d{3})/,'').slice(0,9);
+  e.target.value=d?(Number(d)/100).toFixed(2).replace('.',','):'';
+  try{const n=e.target.value.length;e.target.setSelectionRange(n,n)}catch(x){}
+  PD.itens[+t.pp].pc=e.target.value?num(e.target.value):0;pdAtualiza(+t.pp);return}
+ if(t.pq!=null){const v=num(e.target.value);PD.itens[+t.pq].q=v>0?v:0;pdAtualiza(+t.pq);return}
+ if(t.pe2!=null){const n=parseInt(String(e.target.value).replace(/\D/g,''),10);PD.itens[+t.pe2].emb=n>0?n:0;pdAtualiza(+t.pe2);return}
+ if(t.pb!=null){PBQ[+t.pb]=e.target.value;clearTimeout(window.__pb);window.__pb=setTimeout(()=>{pddraw();const el=$('.pbi');if(el)el.focus()},450)}};
+$('#pedit').onkeydown=e=>{
+ if(e.key!=='Enter')return;const t=e.target.dataset;
+ if(t.pq!=null||t.pe2!=null){
+  const alvo=t.pq!=null?$('[data-pp="'+t.pq+'"]'):$('[data-pq="'+t.pe2+'"]');
+  if(!alvo)return;
+  if(document.activeElement!==alvo){try{alvo.focus({preventScroll:true})}catch(x){try{alvo.focus()}catch(y){}}}
+  try{alvo.select()}catch(x){}
+  marcaFoco(alvo);aoTopo(alvo);
+  setTimeout(()=>{if(document.activeElement!==alvo){try{alvo.focus()}catch(x){}}aoTopo(alvo)},30);
+  return}
+ if(t.pp!=null){e.preventDefault();pdFim()}};
+$('#pedit').addEventListener('focusin',e=>{const t=e.target.dataset;if(t&&(t.pq!=null||t.pp!=null||t.pe2!=null)){marcaFoco(e.target);aoTopo(e.target)}});
+$('#plista').onclick=e=>{const al=e.target.closest?e.target.closest('[data-pr],[data-ped]'):null,t=(al&&al.dataset)||e.target.dataset;
+ if(t.pr!=null&&e.target.closest&&e.target.closest('[data-pr]')){PD.itens.splice(+t.pr,1);pdsalva();pddraw();return}
+ if(t.ped!=null){const it=PD.itens[+t.ped];if(!it)return;PD.edit=it.id;pdsalva();pddraw();
+  const q=$('[data-pq="'+t.ped+'"]');if(q){try{q.focus({preventScroll:true})}catch(x){try{q.focus()}catch(y){}}try{q.select()}catch(x){}
+   marcaFoco(q);aoTopo(q)}}};
 $('#pavis').onchange=e=>{if(e.target.dataset.pok){PD.ok=!!e.target.checked;pdsalva();pmsg(PD.ok?'Conferência marcada. Pode salvar o pedido.':'')}};
-$('#plista').onchange=e=>{const t=e.target.dataset;
- if(t.pq!=null){const v=num(e.target.value);PD.itens[+t.pq].q=v>0?v:1;pdsalva();pddraw();return}
- if(t.pp!=null){PD.itens[+t.pp].pc=num(e.target.value)||0;pdsalva();pddraw();return}
- if(t.pe2!=null){const n=parseInt(String(e.target.value).replace(/\D/g,''),10);PD.itens[+t.pe2].emb=n>0?n:1;pdsalva();pddraw();return}};
-$('#plista').oninput=e=>{const i=e.target.dataset.pb;if(i!=null){PBQ[+i]=e.target.value;clearTimeout(window.__pb);window.__pb=setTimeout(()=>{pddraw();const el=$('.pbi');if(el)el.focus()},450)}};
-$('#phist').onclick=e=>{const t=e.target.dataset;
+$('#phist').onclick=e=>{const al=e.target.closest?e.target.closest('[data-pconf],[data-pvolta],[data-pe],[data-px]'):null,t=(al&&al.dataset)||e.target.dataset;
  if(t.pconf!=null){pdStatus(+t.pconf,'conf');return}
  if(t.pvolta!=null){pdStatus(+t.pvolta,'aberto');return}
  if(t.pe!=null){pdShare(+t.pe);return}
@@ -1339,6 +1460,7 @@ $('#bgpub').onclick=()=>{aba('aj');gradePublica()};
 $('#bgbaixa').onclick=()=>{aba('aj');gradeBaixa(true)};
 $('#bfg').onclick=()=>{$('#gmsg').className='hint';$('#gmsg').textContent='Escolha o arquivo da Grade no seletor…';$('#fg').click()};$('#bfi').onclick=()=>$('#fi').click();$('#bfi2').onclick=()=>$('#fi2').click();
 $('#bxml').onclick=buscaXml;$('#bck').onclick=copiaChave;
+if(!PD.itens||!PD.itens.length){PD.itens=[];PD.edit=null;PD.ok=false}else if(PD.edit&&!PD.itens.some(x=>x.id===PD.edit))PD.edit=null;
 params();draw();vdraw();pddraw();pdModo(PMODO,true);$('#pforn').value=PD.forn||'';nuvemDraw();aba(G?'ped':'grade');
 if(logado())setTimeout(()=>{gradeBaixa(false);sincroniza(true);embSync(true);pdSinc(true)},800);
 </script>

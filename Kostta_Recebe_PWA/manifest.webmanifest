@@ -1,7 +1,7 @@
 {
-  "name": "Kostta Recebe",
+  "name": "Kostta Loja",
   "short_name": "Kostta",
-  "description": "Conferência de recebimento de mercadorias do Mercado Kostta",
+  "description": "Recebe (conferência de recebimento) e Modo Blecaute (venda sem energia)",
   "lang": "pt-BR",
   "start_url": "./index.html",
   "scope": "./",
